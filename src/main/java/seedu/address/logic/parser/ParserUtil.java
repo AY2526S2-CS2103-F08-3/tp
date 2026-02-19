@@ -66,6 +66,12 @@ public class ParserUtil {
         return new Phone(trimmedPhone);
     }
 
+    /**
+     * Parses a {@code String remark} into a {@code Remark}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException
+     */
     public static Remark parseRemark(String remark) throws ParseException {
         requireNonNull(remark);
         String trimmedRemark = remark.trim();
