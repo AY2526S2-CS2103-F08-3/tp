@@ -270,11 +270,11 @@ _{Explain here how the data archiving feature will be implemented}_
 * Strongly values punctuality and is strict about lateness, while still aiming to remain fair
 
 
-**Value proposition**: 
-* Fast and easy search/filter that can check different fields such as salary, qualifications, positions and more. 
+**Value proposition**:
+* Fast and easy search/filter that can check different fields such as salary, qualifications, positions and more.
 * Pin certain entries for fast comparison or easy access.
-* Take an input of a .csv file with the correct format and with relevant data and automatically add the candidates to the list. 
-* Quickly filter through the candidates for those with the ideal skills (and any other factors). 
+* Take an input of a .csv file with the correct format and with relevant data and automatically add the candidates to the list.
+* Quickly filter through the candidates for those with the ideal skills (and any other factors).
 * Calculate the distance between a candidate’s address and the available offices such that the candidate can be sent to the nearest office.
 
 
@@ -334,21 +334,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 3a1. HireLens informs the user of the error made and requests corrected information.
     * 3a2. User enters corrected data.
-    * 
+    *
       Steps 3a1-3a2 are repeated until the data entered are correct.
       Use case resumes at step 2.
 
-      
+    
 **Use case: Edit Contact**
 
 **MSS**
 
 1.  User chooses to edit the details of a candidate.
 2.  HireLens requests for a minimum one parameter to modify and the index of the candidate to be modified.
-3.  User provides the requested data above and the modified data. 
+3.  User provides the requested data above and the modified data.
 4.  HireLens edits the details of the candidate and displays the modified details of the candidate.
 5.  HireLens shows the updated list of the candidate list with all filters intact.
- 
+
     Use case ends.
 
 
@@ -358,7 +358,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User chooses to filter the candidate list by tags.
 2.  HireLens requests for a minimum one tag to filter.
-3. User provides the tags to filter the candidates by. 
+3. User provides the tags to filter the candidates by.
 4. HireLens filters the candidate list and shows a message informing the user the list has been filtered successfully.
 5. HireLens shows the filtered candidate list.
 
@@ -368,7 +368,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 4a. Filter returns empty list (no candidates match the tags given)
 
-    * 4a1. HireLens detects that no candidates match the tags provided. 
+    * 4a1. HireLens detects that no candidates match the tags provided.
     * 4a2. HireLens informs the user that the filter resulted in an empty list.
     * 4a3. HireLens shows the full candidate list without any filters.
 
@@ -377,7 +377,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1. Efficiency 
+1. Efficiency
    * System should be able to process commands such as add, edit, delete, and list within 1 second.
    * System should be able to handle at least 1000 contacts without significant performance loss
 2. Capacity
