@@ -320,7 +320,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User enters necessary information, such as name, phone number, address, email and any optional tags.
-2. HireLens displays a help menu for formatting guidance. 
+2. HireLens displays a help menu for formatting guidance.
 3. HireLens adds the candidate to the list of saved candidates and displays the information of the new candidate added.
 4. HireLens shows the updated list of the full candidate list with the new candidate added
 
@@ -336,7 +336,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Steps 1a1-1a2 are repeated until the data entered are correct.
       Use case resumes at step 2.
 
-    
+
 **Use case: Edit Contact**
 
 **MSS**
