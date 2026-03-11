@@ -1,24 +1,17 @@
 package seedu.address.ui;
 
-import java.util.logging.Logger;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-
-// May not need .Label anymore.
-import javafx.scene.control.Label;
-
-// Import TextArea to display referenced text in the help window
 import javafx.scene.control.TextArea;
-
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
@@ -48,26 +41,8 @@ public class HelpWindow extends UiPart<Stage> {
     @FXML
     private Button copyButton;
 
-    //Old FXML object
-    /*
-    @FXML
-    private Label helpMessage;
-    */
-
     @FXML
     private TextArea helpMessage;
-
-    /**
-     * Creates a new HelpWindow.
-     *
-     * @param root Stage to use as the root of the HelpWindow.
-     */
-    // Old public HelpWindow method.
-    /*
-    public HelpWindow(Stage root) {
-        super(FXML, root);
-        helpMessage.setText(HELP_MESSAGE);
-    }*/
 
     /**
      * Creates a new HelpWindow.
