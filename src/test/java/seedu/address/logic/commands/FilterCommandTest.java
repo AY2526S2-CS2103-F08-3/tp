@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PersonContainsTagsPredicate;
 import seedu.address.model.tag.Tag;
 
@@ -83,6 +85,25 @@ public class FilterCommandTest {
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(BENSON), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void updateFilteredPersonList_multipleTagFilters_success() {
+        model.resetFilteredPersonList();
+
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        PersonContainsTagsPredicate firstPredicate = new PersonContainsTagsPredicate(
+                                                        Set.of(new Tag("friends")));
+        FilterCommand command = new FilterCommand(firstPredicate);
+        expectedModel.updateFilteredPersonList(firstPredicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        PersonContainsTagsPredicate secondPredicate = new PersonContainsTagsPredicate(
+                                                        Set.of(new Tag("owesMoney")));
+        FilterCommand command2 = new FilterCommand(secondPredicate);
+        expectedModel.updateFilteredPersonList(secondPredicate);
+        assertCommandSuccess(command2, model, expectedMessage, expectedModel);
     }
 
     @Test
