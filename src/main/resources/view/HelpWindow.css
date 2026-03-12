@@ -1,8 +1,17 @@
-#copyButton, #helpMessage {
+/* Split copyButton and HelpMessage to allow HelpMessage to take different colour */
+#helpMessage {
     -fx-text-fill: white;
+    -fx-text-font-family: "Segoe UI Semibold";
+    -fx-font-size: 12pt;
 }
 
-#copyButton {
+/* Force white background behind help text*/
+#helpMessage .content {
+    -fx-background-color: #454545;
+}
+
+#copyButton  {
+    -fx-text-fill: white;
     -fx-background-color: dimgray;
 }
 
@@ -14,6 +23,26 @@
     -fx-background-color: darkgray;
 }
 
+/*
+No more HBox, to be removed
 #helpMessageContainer {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+*/
+
+/* Set Scroll Pane colour, using pref height to limit size of colouration */
+
+.scroll-pane          {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-border-color: transparent;
+    -fx-pref-height: 100%;
+}
+.scroll-pane .viewport{
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-pref-height: 100%;
+}
+
+/* Additional colour */
+.root {
     -fx-background-color: derive(#1d1d1d, 20%);
 }

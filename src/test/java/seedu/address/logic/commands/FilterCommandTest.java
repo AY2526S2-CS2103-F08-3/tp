@@ -86,6 +86,25 @@ public class FilterCommandTest {
     }
 
     @Test
+    public void updateFilteredPersonList_multipleTagFilters_success() {
+        model.resetFilteredPersonList();
+
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        PersonContainsTagsPredicate firstPredicate = new PersonContainsTagsPredicate(
+                                                        Set.of(new Tag("friends")));
+        FilterCommand command = new FilterCommand(firstPredicate);
+        expectedModel.updateFilteredPersonList(firstPredicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        PersonContainsTagsPredicate secondPredicate = new PersonContainsTagsPredicate(
+                                                        Set.of(new Tag("owesMoney")));
+        FilterCommand command2 = new FilterCommand(secondPredicate);
+        expectedModel.updateFilteredPersonList(secondPredicate);
+        assertCommandSuccess(command2, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void toStringMethod() {
         PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Set.of(new Tag("friends"),
                 new Tag("owesMoney")));

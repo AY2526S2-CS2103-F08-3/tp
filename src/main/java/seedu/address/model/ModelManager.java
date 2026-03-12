@@ -101,7 +101,7 @@ public class ModelManager implements Model {
     @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        resetFilteredPersonList();
     }
 
     @Override
@@ -125,7 +125,19 @@ public class ModelManager implements Model {
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+
+        Predicate<? super Person> currentPredicate = filteredPersons.getPredicate();
+
+        if (currentPredicate == null) {
+            filteredPersons.setPredicate(predicate);
+        } else {
+            filteredPersons.setPredicate(predicate.and(currentPredicate));
+        }
+    }
+
+    @Override
+    public void resetFilteredPersonList() {
+        filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override

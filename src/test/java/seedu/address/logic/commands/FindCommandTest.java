@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +20,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.PersonContainsTagsPredicate;
+import seedu.address.model.tag.Tag;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -72,6 +75,41 @@ public class FindCommandTest {
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void updateFilteredPersonList_multipleNameFilters_success() {
+        model.resetFilteredPersonList();
+
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        NameContainsKeywordsPredicate firstPredicate = preparePredicate("Kurz Elle Alice");
+        FindCommand command = new FindCommand(firstPredicate);
+        expectedModel.updateFilteredPersonList(firstPredicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        NameContainsKeywordsPredicate secondPredicate = preparePredicate("Alice");
+        FindCommand command2 = new FindCommand(secondPredicate);
+        expectedModel.updateFilteredPersonList(secondPredicate);
+        assertCommandSuccess(command2, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void updateFilteredPersonList_tagAndNameFilters_success() {
+        model.resetFilteredPersonList();
+
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        NameContainsKeywordsPredicate firstPredicate = preparePredicate("Kurz Elle Alice");
+        FindCommand command = new FindCommand(firstPredicate);
+        expectedModel.updateFilteredPersonList(firstPredicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        PersonContainsTagsPredicate secondPredicate = new PersonContainsTagsPredicate(
+                Set.of(new Tag("friends")));
+        FilterCommand command2 = new FilterCommand(secondPredicate);
+        expectedModel.updateFilteredPersonList(secondPredicate);
+        assertCommandSuccess(command2, model, expectedMessage, expectedModel);
     }
 
     @Test

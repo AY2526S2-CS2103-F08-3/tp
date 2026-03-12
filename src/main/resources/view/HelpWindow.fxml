@@ -4,41 +4,57 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
+
+<!--- No more label, do not require Label package import
 <?import javafx.scene.control.Label?>
+-->
+
+<!--- Import new scrolling function -->
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
+
+<!-- Import new variable scrolling box -->
+<?import javafx.scene.layout.VBox?>
+
 <?import javafx.stage.Stage?>
 
-<fx:root resizable="false" title="Help" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<!-- Changed the window root be resizeable with default sizes -->
+<fx:root resizable="true" title="Help" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" width="900" height="700" minWidth="600" minHeight="400">
   <icons>
     <Image url="@/images/help_icon.png" />
   </icons>
   <scene>
-    <Scene>
+    <!--- Default scene width -->
+    <Scene width="900" height="700" >
       <stylesheets>
         <URL value="@HelpWindow.css" />
       </stylesheets>
 
-      <HBox alignment="CENTER" fx:id="helpMessageContainer">
-        <children>
-          <Label fx:id="helpMessage" text="Label">
-            <HBox.margin>
-              <Insets right="5.0" />
-            </HBox.margin>
-          </Label>
-          <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" text="Copy URL">
-            <HBox.margin>
-              <Insets left="5.0" />
-            </HBox.margin>
-          </Button>
-        </children>
-        <opaqueInsets>
-          <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
-        </opaqueInsets>
+      <!--- Reference VBox spacing to scene size -->
+      <VBox spacing="5.0" prefWidth="${scene.width}" prefHeight="${scene.height}">
         <padding>
-          <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
+          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
         </padding>
-      </HBox>
+
+        <!-- Scrollable text area that fills both available vertical and horizontal space, 10000 as maximum -->
+        <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS" prefHeight="10000">
+          <TextArea fx:id="helpMessage"
+                    editable="false"
+                    wrapText="true"
+                    VBox.vgrow="ALWAYS"
+                    prefHeight="10000"/>
+        </ScrollPane>
+
+        <!-- Button row at the bottom -->
+        <HBox alignment="CENTER_RIGHT">
+          <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" text="Copy URL" />
+        </HBox>
+
+      </VBox>
+
     </Scene>
   </scene>
 </fx:root>
