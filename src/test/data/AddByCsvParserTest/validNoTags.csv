@@ -1,3 +1,3 @@
-name,phone,email,address
-Hoon Meier,8482424,stefan@example.com,little india
-Ida Mueller,8482131,hans@example.com,chicago ave
+name,phone,email,address,postalCode
+Hoon Meier,8482424,stefan@example.com,little india,100006
+Ida Mueller,8482131,hans@example.com,chicago ave,100007
