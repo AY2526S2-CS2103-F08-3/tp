@@ -1,6 +1,5 @@
 package seedu.address.model.person;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -67,7 +66,9 @@ public class PersonContainsTagsPredicateTest {
         Set<Tag> predicateTagSet = Set.of(new Tag("Java"), new Tag("Python"));
         PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(predicateTagSet);
 
-        String expected = PersonContainsTagsPredicate.class.getCanonicalName() + "{tags=" + predicateTagSet + "}";
-        assertEquals(expected, predicate.toString());
+        assertTrue(predicate.toString().contains("java"));
+        assertTrue(predicate.toString().contains("python"));
+        assertFalse(predicate.toString().contains("Java"));
+        assertFalse(predicate.toString().contains("Python"));
     }
 }

@@ -121,11 +121,36 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search works on the CURRENT view of the Address Book, rather than the full Address Book.
 
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+### Locating persons by tag: `filter`
+
+Finds persons who contains ALL of the given tags.
+
+Format: `filter t/TAG [t/TAG...]`
+
+* The search is case-insensitive. e.g `hans` will match `Hans`.
+* The search works on the CURRENT view of the AddressBook, rather than the full AddressBook.
+
+Examples:
+Given the following view of the AddressBook,
+![Original View of AddressBook](images/filterOriginalView.png)
+* `filter t/c` returns `Esther Lim`.
+* `filter t/Java t/Python` returns `John Goh`.
+* ![result for 'filter t/Java t/Python'](images/filterPythonJava.png)
+
+### Listing existing tags: `listTags`
+
+Lists all tags in descending order, along with their frequencies.
+
+Format: `listTags`
+
+* Order is not guaranteed in the case of ties.
 
 ### Deleting a person : `delete`
 

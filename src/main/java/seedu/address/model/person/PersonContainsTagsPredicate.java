@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
@@ -12,13 +13,23 @@ import seedu.address.model.tag.Tag;
 public class PersonContainsTagsPredicate implements Predicate<Person> {
     private final Set<Tag> tags;
 
+    /**
+     * Constructs a {@Code PersonContainsTagsPredicate}. Converts the given {@Code Tag}s in the {@Code Set<Tag>} to
+     * lowercase.
+     */
     public PersonContainsTagsPredicate(Set<Tag> tags) {
-        this.tags = tags;
+        Set<Tag> queryTagsLower = tags.stream()
+                .map(tag -> new Tag(tag.tagName.toLowerCase()))
+                .collect(Collectors.toSet());
+        this.tags = queryTagsLower;
     }
 
     @Override
     public boolean test(Person person) {
-        return person.getTags().containsAll(tags);
+        Set<Tag> personTagsLower = person.getTags().stream()
+                .map(tag -> new Tag(tag.tagName.toLowerCase()))
+                .collect(Collectors.toSet());
+        return personTagsLower.containsAll(tags);
     }
 
     @Override

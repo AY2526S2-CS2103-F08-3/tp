@@ -128,4 +128,14 @@ public class ModelManagerTest {
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
     }
+
+    @Test
+    public void getTagCounterDescription() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        AddressBook differentAddressBook = new AddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+        modelManager = new ModelManager(addressBook, userPrefs);
+
+        assertEquals("{[friends]=2, [owesMoney]=1}", modelManager.getTagCounterDescription());
+    }
 }

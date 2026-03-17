@@ -89,4 +89,9 @@ public interface Model {
      * Resets all filters currently applied.
      */
     void resetFilteredPersonList();
+
+    /**
+     * Returns a list of the tags in the model, along with their frequencies in descending order.
+     */
+    String getTagCounterDescription();
 }

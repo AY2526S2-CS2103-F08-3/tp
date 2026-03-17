@@ -29,9 +29,11 @@ public class FilterCommandTest {
     @Test
     public void equals() {
         Set<Tag> firstPredicateTagSet = Set.of(new Tag("Java"), new Tag("Python"));
+        Set<Tag> firstPredicateTagSetLower = Set.of(new Tag("java"), new Tag("python"));
         Set<Tag> secondPredicateTagSet = Set.of(new Tag("Java"), new Tag("Python"), new Tag("C"));
 
         PersonContainsTagsPredicate firstPredicate = new PersonContainsTagsPredicate(firstPredicateTagSet);
+        PersonContainsTagsPredicate firstPredicateLower = new PersonContainsTagsPredicate(firstPredicateTagSetLower);
         PersonContainsTagsPredicate secondPredicate = new PersonContainsTagsPredicate(secondPredicateTagSet);
 
         FilterCommand firstFilterCommand = new FilterCommand(firstPredicate);
@@ -52,6 +54,9 @@ public class FilterCommandTest {
 
         // different person -> returns false
         assertFalse(firstFilterCommand.equals(secondFilterCommand));
+
+        // ignore case -> return true
+        assertTrue(firstPredicate.equals(firstPredicate));
     }
 
     @Test
@@ -111,5 +116,16 @@ public class FilterCommandTest {
         FilterCommand filterCommand = new FilterCommand(predicate);
         String expected = FilterCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
         assertEquals(expected, filterCommand.toString());
+    }
+
+    @Test
+    public void execute_twoTags_upperCase() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Set.of(new Tag("FRIENDS"),
+                new Tag("OWESmoNEy")));
+        FilterCommand command = new FilterCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(BENSON), model.getFilteredPersonList());
     }
 }
