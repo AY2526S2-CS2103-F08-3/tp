@@ -13,6 +13,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -21,6 +22,8 @@ import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.ui.UiAction;
+import seedu.address.ui.content.RightPaneContent;
 
 /**
  * Contains helper methods for testing commands.
@@ -98,8 +101,9 @@ public class CommandTestUtil {
      * that takes a string {@code expectedMessage}.
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
-            Model expectedModel) {
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
+                                            Model expectedModel, UiAction expectedUiAction,
+                                            Optional<RightPaneContent> expectedContent) {
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, expectedUiAction, expectedContent);
         assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);
     }
 

@@ -4,12 +4,15 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.ListTagsCommand.MESSAGE_PREFIX;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.UiAction;
 
 public class ListTagsCommandTest {
     private Model model;
@@ -24,6 +27,7 @@ public class ListTagsCommandTest {
 
     @Test
     public void execute_successful() {
-        assertCommandSuccess(new ListTagsCommand(), model, expectedMessage, expectedModel);
+        assertCommandSuccess(new ListTagsCommand(), model, expectedMessage, expectedModel,
+                UiAction.NONE, Optional.empty());
     }
 }

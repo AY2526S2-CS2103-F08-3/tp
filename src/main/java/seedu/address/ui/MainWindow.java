@@ -151,12 +151,16 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
-            if (commandResult.isShowHelp()) {
+            if (commandResult.getUiAction() == UiAction.SHOW_HELP) {
                 handleHelp();
             }
 
-            if (commandResult.isExit()) {
+            if (commandResult.getUiAction() == UiAction.EXIT) {
                 handleExit();
+            }
+
+            if (commandResult.getUiAction() == UiAction.UPDATE_RIGHT_PANE) {
+                commandResult.getContent().get().render(rightDisplayPlaceHolder);
             }
 
             return commandResult;

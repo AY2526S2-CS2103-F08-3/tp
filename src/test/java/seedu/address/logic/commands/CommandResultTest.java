@@ -4,8 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
+
+import seedu.address.ui.UiAction;
+import seedu.address.ui.content.PersonContent;
 
 public class CommandResultTest {
     @Test
@@ -14,7 +20,7 @@ public class CommandResultTest {
 
         // same values -> returns true
         assertTrue(commandResult.equals(new CommandResult("feedback")));
-        assertTrue(commandResult.equals(new CommandResult("feedback", false, false)));
+        assertTrue(commandResult.equals(new CommandResult("feedback", UiAction.NONE, Optional.empty())));
 
         // same object -> returns true
         assertTrue(commandResult.equals(commandResult));
@@ -28,11 +34,12 @@ public class CommandResultTest {
         // different feedbackToUser value -> returns false
         assertFalse(commandResult.equals(new CommandResult("different")));
 
-        // different showHelp value -> returns false
-        assertFalse(commandResult.equals(new CommandResult("feedback", true, false)));
+        // different UiAction -> returns false
+        assertFalse(commandResult.equals(new CommandResult("feedback", UiAction.EXIT, Optional.empty())));
 
-        // different exit value -> returns false
-        assertFalse(commandResult.equals(new CommandResult("feedback", false, true)));
+        // different RightPaneContent -> returns false
+        assertFalse(commandResult.equals(new CommandResult("feedback", UiAction.NONE,
+                Optional.of(new PersonContent(ALICE)))));
     }
 
     @Test
@@ -45,19 +52,23 @@ public class CommandResultTest {
         // different feedbackToUser value -> returns different hashcode
         assertNotEquals(commandResult.hashCode(), new CommandResult("different").hashCode());
 
-        // different showHelp value -> returns different hashcode
-        assertNotEquals(commandResult.hashCode(), new CommandResult("feedback", true, false).hashCode());
+        // different UiAction -> returns false
+        assertNotEquals(commandResult.hashCode(), new CommandResult("feedback", UiAction.EXIT,
+                Optional.empty()).hashCode());
 
-        // different exit value -> returns different hashcode
-        assertNotEquals(commandResult.hashCode(), new CommandResult("feedback", false, true).hashCode());
+        // different RightPaneContent -> returns false
+        assertNotEquals(commandResult.hashCode(), new CommandResult("feedback", UiAction.NONE,
+                Optional.of(new PersonContent(ALICE))).hashCode());
     }
 
     @Test
     public void toStringMethod() {
-        CommandResult commandResult = new CommandResult("feedback");
+        CommandResult commandResult = new CommandResult("feedback", UiAction.UPDATE_RIGHT_PANE,
+                Optional.of(new PersonContent(ALICE)));
         String expected = CommandResult.class.getCanonicalName() + "{feedbackToUser="
-                + commandResult.getFeedbackToUser() + ", showHelp=" + commandResult.isShowHelp()
-                + ", exit=" + commandResult.isExit() + "}";
+                + commandResult.getFeedbackToUser()
+                + ", uiAction=" + commandResult.getUiAction()
+                + ", rightPaneContent=" + commandResult.getContent() + "}";
         assertEquals(expected, commandResult.toString());
     }
 }
