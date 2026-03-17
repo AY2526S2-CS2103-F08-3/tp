@@ -18,12 +18,13 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.PostalCode;
 import seedu.address.model.tag.Tag;
 
 /**
  * Parses a CSV file path and its contents, then creates a new {@code AddByCsvCommand} object.
  * The CSV file must have the {@code .csv} extension and contain at least the columns:
- * name, phone, email, address. An optional tags column may contain semicolon-separated tags.
+ * name, phone, email, address, postalCode. An optional tags column may contain semicolon-separated tags.
  */
 public class AddByCsvParser implements Parser<AddByCsvCommand> {
 
@@ -36,16 +37,18 @@ public class AddByCsvParser implements Parser<AddByCsvCommand> {
     public static final String MESSAGE_EMPTY_CSV =
             "The CSV file is empty or contains only a header row.";
     public static final String MESSAGE_INVALID_CSV_HEADER =
-            "The CSV file must have a header row with at least: name,phone,email,address";
+            "The CSV file must have a header row with at least: name,phone,email,address,postalCode";
     public static final String MESSAGE_INVALID_ROW =
             "Invalid data at row %1$d: %2$s";
 
-    private static final int EXPECTED_MIN_COLUMNS = 4; // name, phone, email, address are required; tags are optional
+    // name, phone, email, address, postalCode are required; tags are optional
+    private static final int EXPECTED_MIN_COLUMNS = 5;
     private static final int NAME_INDEX = 0;
     private static final int PHONE_INDEX = 1;
     private static final int EMAIL_INDEX = 2;
     private static final int ADDRESS_INDEX = 3;
-    private static final int TAGS_INDEX = 4;
+    private static final int POSTAL_CODE_INDEX = 4;
+    private static final int TAGS_INDEX = 5;
 
     @Override
     public AddByCsvCommand parse(String args) throws ParseException {
@@ -121,7 +124,8 @@ public class AddByCsvParser implements Parser<AddByCsvCommand> {
         boolean isValidHeader = "name".equalsIgnoreCase(header[NAME_INDEX].trim())
                 && "phone".equalsIgnoreCase(header[PHONE_INDEX].trim())
                 && "email".equalsIgnoreCase(header[EMAIL_INDEX].trim())
-                && "address".equalsIgnoreCase(header[ADDRESS_INDEX].trim());
+                && "address".equalsIgnoreCase(header[ADDRESS_INDEX].trim())
+                && "postalCode".equalsIgnoreCase(header[POSTAL_CODE_INDEX].trim());
 
         if (!isValidHeader) {
             throw new ParseException(MESSAGE_INVALID_CSV_HEADER);
@@ -172,16 +176,17 @@ public class AddByCsvParser implements Parser<AddByCsvCommand> {
             Phone phone = ParserUtil.parsePhone(fields[PHONE_INDEX]);
             Email email = ParserUtil.parseEmail(fields[EMAIL_INDEX]);
             Address address = ParserUtil.parseAddress(fields[ADDRESS_INDEX]);
+            PostalCode postalCode = ParserUtil.parsePostalCode(fields[POSTAL_CODE_INDEX]);
             Set<Tag> tags = parseCsvTags(fields, rowNumber);
 
-            return new Person(name, phone, email, address, tags);
+            return new Person(name, phone, email, address, postalCode, tags);
         } catch (ParseException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_ROW, rowNumber, e.getMessage()));
         }
     }
 
     /**
-     * Parses tags from the CSV row. Tags are expected in the 5th column onward,
+     * Parses tags from the CSV row. Tags are expected in the 6th column onward,
      * separated by semicolons within a single column.
      *
      * @param fields the split CSV fields.

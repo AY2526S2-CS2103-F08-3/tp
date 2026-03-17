@@ -20,7 +20,7 @@ public class AddByCsvCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds multiple people to the address book from a CSV file.\n"
             + "Parameters: FILE_PATH (must end with .csv)\n"
-            + "The CSV file should have columns: name, phone, email, address, [tags]\n"
+            + "The CSV file should have columns: name, phone, email, address, postalCode, [tags]\n"
             + "Example: " + COMMAND_WORD + " data/candidates.csv";
 
     public static final String MESSAGE_SUCCESS = "%1$d person(s) added from CSV file.";

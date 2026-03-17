@@ -38,9 +38,11 @@ public class AddByCsvParserTest {
 
         Person alice = new PersonBuilder().withName("Alice Pauline").withPhone("94351253")
                 .withEmail("alice@example.com").withAddress("123 Jurong West Ave 6 #08-111")
+                .withPostalCode("640123")
                 .withTags("friends").build();
         Person benson = new PersonBuilder().withName("Benson Meier").withPhone("98765432")
                 .withEmail("johnd@example.com").withAddress("311 Clementi Ave 2 #02-25")
+                .withPostalCode("120311")
                 .withTags("owesMoney", "friends").build();
 
         List<Person> expectedPersons = Arrays.asList(alice, benson, CARL);
@@ -101,7 +103,7 @@ public class AddByCsvParserTest {
         String filePath = TEST_DATA_FOLDER.resolve("tooFewColumns.csv").toString();
         assertParseFailure(parser, " " + filePath,
                 String.format(AddByCsvParser.MESSAGE_INVALID_ROW, 2,
-                        "expected at least 4 columns"));
+                        "expected at least 5 columns"));
     }
 
     @Test
@@ -136,6 +138,14 @@ public class AddByCsvParserTest {
                         seedu.address.model.tag.Tag.MESSAGE_CONSTRAINTS));
     }
 
+    @Test
+    public void parse_invalidPostalCode_failure() {
+        String filePath = TEST_DATA_FOLDER.resolve("invalidPostalCode.csv").toString();
+        assertParseFailure(parser, " " + filePath,
+                String.format(AddByCsvParser.MESSAGE_INVALID_ROW, 2,
+                        seedu.address.model.person.PostalCode.MESSAGE_CONSTRAINTS));
+    }
+
     // ==================== Edge-case tests ====================
 
     @Test
@@ -146,9 +156,11 @@ public class AddByCsvParserTest {
 
         Person alice = new PersonBuilder().withName("Alice Pauline").withPhone("94351253")
                 .withEmail("alice@example.com").withAddress("123 Jurong West Ave 6 #08-111")
+                .withPostalCode("640123")
                 .withTags("friends").build();
         Person benson = new PersonBuilder().withName("Benson Meier").withPhone("98765432")
                 .withEmail("johnd@example.com").withAddress("311 Clementi Ave 2 #02-25")
+                .withPostalCode("120311")
                 .withTags("owesMoney", "friends").build();
 
         List<Person> expectedPersons = Arrays.asList(alice, benson, CARL);
@@ -163,6 +175,7 @@ public class AddByCsvParserTest {
 
         Person alice = new PersonBuilder().withName("Alice Pauline").withPhone("94351253")
                 .withEmail("alice@example.com").withAddress("123 Jurong West Ave 6 #08-111")
+                .withPostalCode("640123")
                 .withTags("friends", "family").build();
 
         List<Person> expectedPersons = Arrays.asList(alice);
