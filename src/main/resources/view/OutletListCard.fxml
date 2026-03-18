@@ -7,20 +7,22 @@
 <?import javafx.scene.layout.HBox?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <GridPane HBox.hgrow="ALWAYS" vgap="2" hgap="10" minHeight="42" prefHeight="42" maxHeight="42">
+  <GridPane HBox.hgrow="ALWAYS" vgap="2" hgap="8" minHeight="48" prefHeight="48" maxHeight="48">
     <padding>
       <Insets bottom="4" top="4" />
     </padding>
     <columnConstraints>
-      <ColumnConstraints minWidth="50" prefWidth="50" maxWidth="50" hgrow="NEVER" />
-      <ColumnConstraints minWidth="100" prefWidth="200" hgrow="ALWAYS" />
-      <ColumnConstraints minWidth="80" prefWidth="80" maxWidth="80" hgrow="NEVER" />
+      <ColumnConstraints minWidth="38" prefWidth="38" maxWidth="38" hgrow="NEVER" />
+      <ColumnConstraints minWidth="80" prefWidth="160" hgrow="ALWAYS" />
+      <ColumnConstraints minWidth="66" prefWidth="66" maxWidth="66" hgrow="NEVER" />
     </columnConstraints>
 
-    <Label fx:id="id" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.rowSpan="2" styleClass="cell_small_label" />
+    <Label fx:id="id" GridPane.rowIndex="0" GridPane.columnIndex="0"
+           GridPane.rowSpan="2" styleClass="cell_small_label" />
     <Label fx:id="name" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="cell_small_label" />
-    <Label fx:id="postalCode" GridPane.rowIndex="0" GridPane.columnIndex="2" styleClass="small_index_label" />
+    <Label fx:id="postalCode" GridPane.rowIndex="0" GridPane.columnIndex="2"
+           GridPane.halignment="RIGHT" styleClass="cell_small_label" style="-fx-padding: 0;" />
     <Label fx:id="address" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="2"
-           styleClass="small_index_label" />
+           styleClass="cell_small_label" />
   </GridPane>
 </HBox>
