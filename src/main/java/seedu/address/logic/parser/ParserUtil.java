@@ -9,6 +9,9 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.outlet.OutletAddress;
+import seedu.address.model.outlet.OutletName;
+import seedu.address.model.outlet.OutletPostalCode;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -52,6 +55,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String outletName} into an {@code OutletName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code outletName} is invalid.
+     */
+    public static OutletName parseOutletName(String outletName) throws ParseException {
+        requireNonNull(outletName);
+        String trimmedName = outletName.trim();
+        if (!OutletName.isValidOutletName(trimmedName)) {
+            throw new ParseException(OutletName.MESSAGE_CONSTRAINTS);
+        }
+        return new OutletName(trimmedName);
+    }
+
+    /**
      * Parses a {@code String phone} into a {@code Phone}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -82,6 +100,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String outletAddress} into an {@code OutletAddress}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code outletAddress} is invalid.
+     */
+    public static OutletAddress parseOutletAddress(String outletAddress) throws ParseException {
+        requireNonNull(outletAddress);
+        String trimmedAddress = outletAddress.trim();
+        if (!OutletAddress.isValidOutletAddress(trimmedAddress)) {
+            throw new ParseException(OutletAddress.MESSAGE_CONSTRAINTS);
+        }
+        return new OutletAddress(trimmedAddress);
+    }
+
+    /**
      * Parses a {@code String postalCode} into a {@code PostalCode}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -94,6 +127,21 @@ public class ParserUtil {
             throw new ParseException(PostalCode.MESSAGE_CONSTRAINTS);
         }
         return new PostalCode(trimmedPostalCode);
+    }
+
+    /**
+     * Parses a {@code String outletPostalCode} into an {@code OutletPostalCode}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code outletPostalCode} is invalid.
+     */
+    public static OutletPostalCode parseOutletPostalCode(String outletPostalCode) throws ParseException {
+        requireNonNull(outletPostalCode);
+        String trimmedPostalCode = outletPostalCode.trim();
+        if (!OutletPostalCode.isValidPostalCode(trimmedPostalCode)) {
+            throw new ParseException(OutletPostalCode.MESSAGE_CONSTRAINTS);
+        }
+        return new OutletPostalCode(trimmedPostalCode);
     }
 
     /**
