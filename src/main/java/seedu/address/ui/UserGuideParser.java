@@ -61,12 +61,12 @@ public class UserGuideParser {
         // Takes the ArrayList of lines starting from startingLine, builds them into a string for
         // loadUserGuide to pass to HelpWindow
         StringBuilder result = new StringBuilder();
-        for (int i = startingLine; i< endingLine; i++) {
+        for (int i = startingLine; i < endingLine; i++) {
             result.append(lines.get(i));
             result.append("\n");
         }
         if (!result.isEmpty()) {
-            result.deleteCharAt(result.length()-1);
+            result.deleteCharAt(result.length() - 1);
         }
 
         return result.toString();

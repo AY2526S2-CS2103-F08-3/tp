@@ -1,11 +1,14 @@
 package seedu.address.ui;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.logging.Logger;
+
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.ast.Node;
-
-import java.io.*;
-import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -134,12 +137,6 @@ public class HelpWindow extends UiPart<Stage> {
         getRoot().requestFocus();
     }
 
-    /**
-     * Reads UserGuide.md from the filesystem path USERGUIDE_PATH,
-     * extracts the section from START_HEADING to END_HEADING (or EOF),
-     * and strips Markdown formatting to return plain text.
-     */
-
     /** Reads UserGuide.md from the relative path USERGUIDE_PATH,
      * runs extractUserGuide to extract UserGuide from START_HEADING to END_HEADING
      * @return
@@ -159,10 +156,10 @@ public class HelpWindow extends UiPart<Stage> {
             }
 
         } catch (Exception e) {
-            logger.warning("Failed to load UserGuide.md from path " + USERGUIDE_PATH +
-                    e.getMessage());
-            return "Failed to load local user-guide. \n Visit: " + USERGUIDE_URL +
-                    "instead";
+            logger.warning("Failed to load UserGuide.md from path " + USERGUIDE_PATH
+                    + e.getMessage());
+            return "Failed to load local user-guide. \n Visit: " + USERGUIDE_URL
+                    + "instead";
         }
 
     }
