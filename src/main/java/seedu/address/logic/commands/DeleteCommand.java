@@ -48,7 +48,7 @@ public class DeleteCommand extends UndoableCommand {
 
         Person deletedPerson = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(deletedPerson);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)),
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(deletedPerson)),
                 UiAction.UPDATE_RIGHT_PANE, Optional.of(new PersonContent(deletedPerson, RIGHT_PANE_HEADER)));
     }
 
