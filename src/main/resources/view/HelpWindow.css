@@ -1,7 +1,7 @@
 /* Split copyButton and HelpMessage to allow HelpMessage to take different colour */
 #helpMessage {
     -fx-text-fill: white;
-    -fx-text-font-family: "Segoe UI Semibold";
+    -fx-text-font-family: "monospace";
     -fx-font-size: 12pt;
 }
 

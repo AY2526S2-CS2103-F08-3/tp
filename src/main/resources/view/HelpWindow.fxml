@@ -5,10 +5,6 @@
 <?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
 
-<!--- No more label, do not require Label package import
-<?import javafx.scene.control.Label?>
--->
-
 <!--- Import new scrolling function -->
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
@@ -18,6 +14,9 @@
 
 <!-- Import new variable scrolling box -->
 <?import javafx.scene.layout.VBox?>
+
+<!--- Import WebView HTML module -->
+<?import javafx.scene.web.WebView?>
 
 <?import javafx.stage.Stage?>
 
@@ -39,14 +38,17 @@
           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
         </padding>
 
-        <!-- Scrollable text area that fills both available vertical and horizontal space, 10000 as maximum -->
+        <!-- Scrollable text area that fills both available vertical and horizontal space, 10000 as maximum
         <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS" prefHeight="10000">
           <TextArea fx:id="helpMessage"
                     editable="false"
                     wrapText="true"
                     VBox.vgrow="ALWAYS"
                     prefHeight="10000"/>
-        </ScrollPane>
+        </ScrollPane> -->
+
+        <!-- WebView HTML viewing Area -->
+        <WebView fx:id="helpMessage" VBox.vgrow="ALWAYS" />
 
         <!-- Button row at the bottom -->
         <HBox alignment="CENTER_RIGHT">
