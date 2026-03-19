@@ -102,13 +102,11 @@ public class ModelManager implements Model {
     @Override
     public void deletePerson(Person target) {
         addressBook.removePerson(target);
-        tagCounter.decrementTags(target, addressBook.getPersonList());
     }
 
     @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
-        tagCounter.incrementTags(person, addressBook.getPersonList());
         resetFilteredPersonList();
     }
 
@@ -197,8 +195,8 @@ public class ModelManager implements Model {
 
     //=========== TagCounter Accessors =============================================================
     @Override
-    public String getTagCounterDescription() {
-        return tagCounter.displayDescendingOrder();
+    public TagCounter getTagCounter() {
+        return new TagCounter(filteredPersons);
     }
 
     @Override

@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +20,8 @@ import seedu.address.model.outlet.OutletAddress;
 import seedu.address.model.outlet.OutletName;
 import seedu.address.model.outlet.OutletPostalCode;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagCounter;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -184,11 +187,15 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void getTagCounterDescription() {
+    public void getTagCounter() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         UserPrefs userPrefs = new UserPrefs();
         modelManager = new ModelManager(addressBook, userPrefs);
 
-        assertEquals("{[friends]=2, [owesMoney]=1}", modelManager.getTagCounterDescription());
+        LinkedHashMap<Tag, Integer> tagMap = new LinkedHashMap<Tag, Integer>();
+        tagMap.put(new Tag("friends"), 2);
+        tagMap.put(new Tag("owesMoney"), 1);
+
+        assertEquals(new TagCounter(tagMap), modelManager.getTagCounter());
     }
 }

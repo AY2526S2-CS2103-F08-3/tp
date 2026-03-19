@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+HireLens is a **desktop app for managing candidates, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, HireLens can get your candidate management tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
@@ -15,15 +15,15 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+3. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all contacts.
@@ -36,7 +36,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -66,9 +66,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
-
-![help message](images/helpMessage.png)
+Displays the user guide.
 
 Format: `help`
 
@@ -125,8 +123,8 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 * `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find carl ethan` returns `Carl Kurz`, `Ethan Lim` <br>
+![result for 'find carl ethan'](images/findCarlEthanResult.png)
 
 ### Locating persons by tag: `filter`
 
@@ -138,17 +136,15 @@ Format: `filter t/TAG [t/TAG...]`
 * The search works on the CURRENT view of the AddressBook, rather than the full AddressBook.
 
 Examples:
-Given the following view of the AddressBook,
-![Original View of AddressBook](images/filterOriginalView.png)
 * `filter t/c` returns `Esther Lim`.
-* `filter t/Java t/Python` returns `John Goh`.
-* ![result for 'filter t/Java t/Python'](images/filterPythonJava.png)
+* `filter t/Java t/Python` returns `Benson Meier`, `Natalie Lim`.
+* ![result for 'filter t/python t/java'](images/filterPythonJavaResult.png)
 
-### Listing existing tags: `listTags`
+### Listing existing tags: `listtags`
 
 Lists all tags in descending order, along with their frequencies.
 
-Format: `listTags`
+Format: `listtags`
 
 * Order is not guaranteed in the case of ties.
 

@@ -1,11 +1,11 @@
 package seedu.address.model.tag;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 
@@ -13,20 +13,24 @@ import seedu.address.model.person.Person;
  * A wrapper to count the frequency of occurence of {@code Tag}s in the current candidate book.
  */
 public class TagCounter {
-    private HashMap<Tag, Integer> tagCounter;
+    private LinkedHashMap<Tag, Integer> tagCounter;
 
     public TagCounter() {
-        tagCounter = new HashMap<Tag, Integer>();
+        tagCounter = new LinkedHashMap<Tag, Integer>();
     }
 
     public TagCounter(ReadOnlyAddressBook addressBook) {
         this.resetTagCounter(addressBook.getPersonList());
     }
 
+    public TagCounter(FilteredList<Person> filteredPersons) {
+        this.resetTagCounter(filteredPersons);
+    }
+
     /**
-     * Package-private constructor for testing purposes.
+     * Constructor for testing purposes.
      */
-    TagCounter(HashMap<Tag, Integer> tagCounter) {
+    public TagCounter(LinkedHashMap<Tag, Integer> tagCounter) {
         this.tagCounter = tagCounter;
     }
 
@@ -84,10 +88,14 @@ public class TagCounter {
      * be called as a last resort to reset the TagCounter to the correct state should any errors occur.
      */
     public void resetTagCounter(ObservableList<Person> personList) {
-        tagCounter = new HashMap<Tag, Integer>();
+        tagCounter = new LinkedHashMap<Tag, Integer>();
         for (Person person : personList) {
             this.incrementTags(person, personList);
         }
+    }
+
+    public LinkedHashMap<Tag, Integer> getTagCounter() {
+        return tagCounter;
     }
 
     /**
@@ -112,15 +120,14 @@ public class TagCounter {
     /**
      * Returns the tags in descending order of frequency, along with their counts.
      */
-    public String displayDescendingOrder() {
+    public LinkedHashMap<Tag, Integer> displayDescendingOrder() {
         return tagCounter.entrySet().stream()
                 .sorted(Map.Entry.<Tag, Integer>comparingByValue().reversed())
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue, (
                                 a, b) -> a,
-                        LinkedHashMap::new))
-                .toString();
+                        LinkedHashMap::new));
     }
 
     @Override

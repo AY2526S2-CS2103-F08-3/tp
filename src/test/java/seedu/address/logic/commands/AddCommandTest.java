@@ -25,6 +25,7 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.outlet.Outlet;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.tag.TagCounter;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -203,6 +204,7 @@ public class AddCommandTest {
 
         @Override
         public String getTagCounterDescription() {
+        public TagCounter getTagCounter() {
             throw new AssertionError("This method should not be called.");
         }
     }

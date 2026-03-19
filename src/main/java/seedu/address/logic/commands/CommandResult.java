@@ -3,8 +3,12 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.ui.UiAction;
+import seedu.address.ui.content.RightPaneContent;
 
 /**
  * Represents the result of a command execution.
@@ -12,20 +16,16 @@ import seedu.address.commons.util.ToStringBuilder;
 public class CommandResult {
 
     private final String feedbackToUser;
-
-    /** Help information should be shown to the user. */
-    private final boolean showHelp;
-
-    /** The application should exit. */
-    private final boolean exit;
+    private final UiAction uiAction;
+    private final Optional<RightPaneContent> content;
 
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+    public CommandResult(String feedbackToUser, UiAction uiAction, Optional<RightPaneContent> content) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
-        this.showHelp = showHelp;
-        this.exit = exit;
+        this.uiAction = uiAction;
+        this.content = content;
     }
 
     /**
@@ -33,19 +33,29 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false);
+        this(feedbackToUser, UiAction.NONE, Optional.empty());
+    }
+
+    /**
+     * Overloaded constructor for commands that do not update the right pane.
+     */
+    public CommandResult(String feedbackToUser, UiAction uiAction) throws CommandException {
+        this(feedbackToUser, uiAction, Optional.empty());
+        if (uiAction == UiAction.UPDATE_RIGHT_PANE) {
+            throw new CommandException("This command requires a person or tagcount object.");
+        }
     }
 
     public String getFeedbackToUser() {
         return feedbackToUser;
     }
 
-    public boolean isShowHelp() {
-        return showHelp;
+    public UiAction getUiAction() {
+        return uiAction;
     }
 
-    public boolean isExit() {
-        return exit;
+    public Optional<RightPaneContent> getContent() {
+        return content;
     }
 
     @Override
@@ -61,21 +71,21 @@ public class CommandResult {
 
         CommandResult otherCommandResult = (CommandResult) other;
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
-                && showHelp == otherCommandResult.showHelp
-                && exit == otherCommandResult.exit;
+                && uiAction == otherCommandResult.uiAction
+                && Objects.equals(content, otherCommandResult.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit);
+        return Objects.hash(feedbackToUser, uiAction, content);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("feedbackToUser", feedbackToUser)
-                .add("showHelp", showHelp)
-                .add("exit", exit)
+                .add("uiAction", uiAction)
+                .add("rightPaneContent", content)
                 .toString();
     }
 
