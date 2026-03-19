@@ -220,7 +220,6 @@ public class AddByCsvCommandTest {
         }
 
         @Override
-        public String getTagCounterDescription() {
         public TagCounter getTagCounter() {
             throw new AssertionError("This method should not be called.");
         }

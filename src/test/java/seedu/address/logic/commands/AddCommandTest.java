@@ -203,7 +203,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public String getTagCounterDescription() {
         public TagCounter getTagCounter() {
             throw new AssertionError("This method should not be called.");
         }

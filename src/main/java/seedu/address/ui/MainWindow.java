@@ -128,6 +128,9 @@ public class MainWindow extends UiPart<Stage> {
         detailedPersonPlaceholder.getChildren().setAll(detailedCard.getRoot());
     }
 
+    /**
+     * Displays the selected person on the right as a {@Code DetailedPersonCard}.
+     */
     public void showPersonDetails(Person person, String header) {
         DetailedPersonCard detailedCard = new DetailedPersonCard(person, header);
         rightDisplayPlaceHolder.getChildren().setAll(detailedCard.getRoot());

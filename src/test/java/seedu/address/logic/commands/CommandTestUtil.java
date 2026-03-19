@@ -117,6 +117,16 @@ public class CommandTestUtil {
      * that takes a string {@code expectedMessage}.
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
+                                            Model expectedModel) {
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
+        assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);
+    }
+
+    /**
+     * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandResult, Model)}
+     * that takes a string {@code expectedMessage} and right pane expectations.
+     */
+    public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
                                             Model expectedModel, UiAction expectedUiAction,
                                             Optional<RightPaneContent> expectedContent) {
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, expectedUiAction, expectedContent);
