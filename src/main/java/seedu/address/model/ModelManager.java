@@ -111,7 +111,6 @@ public class ModelManager implements Model {
     public void addPerson(Person person) {
         addressBook.addPerson(person);
         tagCounter.incrementTags(person, addressBook.getPersonList());
-        resetFilteredPersonList();
     }
 
     @Override
