@@ -28,6 +28,9 @@ public class UniqueTagComboListTest {
     private static final TagCombo TAG_COMBO_THREE = new TagCombo(new TagComboName("python dev"), Set.of(
             new Tag("python"), new Tag("ml")
     ));
+    private static final TagCombo TAG_COMBO_FOUR = new TagCombo(new TagComboName("ml dev"), Set.of(
+            new Tag("python"), new Tag("ml"),  new Tag("java")
+    ));
     private final UniqueTagComboList uniqueTagComboList = new UniqueTagComboList();
 
     @Test
@@ -60,7 +63,13 @@ public class UniqueTagComboListTest {
     @Test
     public void add_duplicateTagCombo_throwsDuplicateTagComboException() {
         uniqueTagComboList.add(TAG_COMBO_ONE);
-        assertThrows(DuplicateTagComboException.class, () -> uniqueTagComboList.add(TAG_COMBO_ONE));
+        assertThrows(DuplicateTagComboException.class, () -> uniqueTagComboList.add(TAG_COMBO_THREE));
+    }
+
+    @Test
+    public void add_duplicateName_throwsDuplicateTagComboException() {
+        uniqueTagComboList.add(TAG_COMBO_ONE);
+        assertThrows(DuplicateTagComboException.class, () -> uniqueTagComboList.add(TAG_COMBO_FOUR));
     }
 
     @Test

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -43,7 +44,7 @@ public class AddTagComboCommandTest {
 
         CommandResult commandResult = new AddTagComboCommand(validTagCombo).execute(modelStub);
 
-        assertEquals(String.format(AddTagComboCommand.MESSAGE_SUCCESS, validTagCombo),
+        assertEquals(String.format(AddTagComboCommand.MESSAGE_SUCCESS, Messages.format(validTagCombo)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validTagCombo), modelStub.tagCombosAdded);
     }

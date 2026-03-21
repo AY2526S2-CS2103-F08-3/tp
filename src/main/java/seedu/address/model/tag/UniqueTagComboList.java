@@ -37,7 +37,7 @@ public class UniqueTagComboList implements Iterable<TagCombo> {
      */
     public void add(TagCombo toAdd) {
         requireNonNull(toAdd);
-        if (internalList.contains(toAdd)) {
+        if (contains(toAdd)) {
             throw new DuplicateTagComboException("A tag combo with the same tags or name already exists!");
         }
         internalMap.put(toAdd.getName(), toAdd);
@@ -49,7 +49,7 @@ public class UniqueTagComboList implements Iterable<TagCombo> {
      */
     public void remove(TagCombo toRemove) {
         requireNonNull(toRemove);
-        if (!internalList.contains(toRemove)) {
+        if (!contains(toRemove)) {
             throw new TagComboNotFoundException();
         }
         if (!internalMap.containsKey(toRemove.getName())) {

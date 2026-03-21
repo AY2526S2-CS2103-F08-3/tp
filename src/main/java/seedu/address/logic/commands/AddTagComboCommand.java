@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.tag.TagCombo;
@@ -16,11 +17,11 @@ import seedu.address.ui.UiAction;
 public class AddTagComboCommand extends Command {
     public static final String COMMAND_WORD = "addtagcombo";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a Tag Combo."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a Tag Combo.\n"
             + "Parameters: "
             + PREFIX_TAG + "TAG "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " "
+            + "Example: " + COMMAND_WORD + " developer "
             + PREFIX_TAG + "python "
             + PREFIX_TAG + "java";
 
@@ -48,7 +49,7 @@ public class AddTagComboCommand extends Command {
             throw new CommandException(e.getMessage());
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd), UiAction.SHOW_TAG_COMBO);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)), UiAction.SHOW_TAG_COMBO);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class TagCombo {
         if (otherTagCombo == this) {
             return true;
         }
-        return this.tagSet.equals(otherTagCombo.tagSet) || this.name.equals(otherTagCombo.name);
+        return (this.tagSet.equals(otherTagCombo.tagSet) || this.name.equals(otherTagCombo.name));
     }
 
     public TagComboName getName() {
