@@ -9,6 +9,7 @@ import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.outlet.Outlet;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.TagCombo;
 import seedu.address.model.tag.TagCounter;
 
 /**
@@ -147,6 +148,11 @@ public interface Model {
      * Returns a list of the tags in the model, along with their frequencies in descending order.
      */
     TagCounter getTagCounter();
+
+    /**
+     * Returns the list of tag combos.
+     */
+    ObservableList<TagCombo> getTagComboList();
 
     void recordCommand(UndoableCommand undoableCommand);
 

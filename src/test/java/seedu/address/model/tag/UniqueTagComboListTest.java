@@ -17,13 +17,13 @@ import seedu.address.model.tag.exceptions.TagComboNotFoundException;
 
 public class UniqueTagComboListTest {
 
-    private static final TagCombo TAG_COMBO_ONE = new TagCombo("ml_dev", Set.of(
+    private static final TagCombo TAG_COMBO_ONE = new TagCombo(new TagComboName("ml dev"), Set.of(
             new Tag("python"), new Tag("ml")
     ));
-    private static final TagCombo TAG_COMBO_TWO = new TagCombo("frontend_java_dev", Set.of(
+    private static final TagCombo TAG_COMBO_TWO = new TagCombo(new TagComboName("frontend java dev"), Set.of(
             new Tag("frontend"), new Tag("java")
     ));
-    private static final TagCombo TAG_COMBO_THREE = new TagCombo("python_dev", Set.of(
+    private static final TagCombo TAG_COMBO_THREE = new TagCombo(new TagComboName("python dev"), Set.of(
             new Tag("python"), new Tag("ml")
     ));
     private final UniqueTagComboList uniqueTagComboList = new UniqueTagComboList();

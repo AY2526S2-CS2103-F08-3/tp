@@ -10,13 +10,13 @@ import seedu.address.commons.util.ToStringBuilder;
  * equal if they have the same set of {@code Tag}s, regardless of the name assigned to the {@code TagCombo}.
  */
 public class TagCombo {
-    private final String name;
+    private final TagComboName name;
     private final Set<Tag> tagSet;
 
     /**
      * Constructs a {@code TagCombo} with a name and tagSet.
      */
-    public TagCombo(String name, Set<Tag> tagSet) {
+    public TagCombo(TagComboName name, Set<Tag> tagSet) {
         this.name = name;
         this.tagSet = tagSet;
     }
@@ -29,6 +29,14 @@ public class TagCombo {
             return true;
         }
         return this.tagSet.equals(otherTagCombo.tagSet);
+    }
+
+    public TagComboName getName() {
+        return name;
+    }
+
+    public Set<Tag> getTagSet() {
+        return tagSet;
     }
 
     @Override

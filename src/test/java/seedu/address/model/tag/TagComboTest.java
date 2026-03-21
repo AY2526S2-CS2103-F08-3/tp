@@ -15,9 +15,9 @@ public class TagComboTest {
     private final Set<Tag> secondTagSet = Set.of(new Tag("python"), new Tag("java"));
     private final Set<Tag> thirdTagSet = Set.of(new Tag("python"), new Tag("java"), new Tag("C"));
 
-    private final TagCombo firstTagCombo = new TagCombo("one", firstTagSet);
-    private final TagCombo secondTagCombo = new TagCombo("two", secondTagSet);
-    private final TagCombo thirdTagCombo = new TagCombo("three", thirdTagSet);
+    private final TagCombo firstTagCombo = new TagCombo(new TagComboName("one"), firstTagSet);
+    private final TagCombo secondTagCombo = new TagCombo(new TagComboName("two"), secondTagSet);
+    private final TagCombo thirdTagCombo = new TagCombo(new TagComboName("three"), thirdTagSet);
 
     @Test
     public void equals() {

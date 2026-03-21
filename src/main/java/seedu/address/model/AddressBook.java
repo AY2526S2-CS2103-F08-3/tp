@@ -150,6 +150,29 @@ public class AddressBook implements ReadOnlyAddressBook {
         outlets.remove(outlet);
     }
 
+    /**
+     * Adds a {@code tagCombo} to the {@code AddressBook}.
+     * The {@code tagCombo} must not already exist in the {@code AddressBook}.
+     */
+    public void addTagCombo(TagCombo tagCombo) {
+        tagCombos.add(tagCombo);
+    }
+
+    /**
+     * Removes a {@code tagCombo} from the {@code AddressBook}.
+     * The {@code tagCombo} must already exist in the {@code AddressBook}.
+     */
+    public void removeTagCombo(TagCombo tagCombo) {
+        tagCombos.remove(tagCombo);
+    }
+
+    /**
+     * Checks if the {@code tagCombo} exists in the {@code AddressBook} using {@code isSameTagCombo}.
+     */
+    public boolean hasTagCombo(TagCombo tagCombo) {
+        return tagCombos.contains(tagCombo);
+    }
+
     //// util methods
 
     @Override

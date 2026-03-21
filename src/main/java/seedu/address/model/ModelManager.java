@@ -17,6 +17,7 @@ import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.outlet.Outlet;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.TagCombo;
 import seedu.address.model.tag.TagCounter;
 
 /**
@@ -238,6 +239,11 @@ public class ModelManager implements Model {
     public void recordCommand(UndoableCommand undoableCommand) {
         requireNonNull(undoableCommand);
         undoStack.push(undoableCommand);
+    }
+
+    @Override
+    public ObservableList<TagCombo> getTagComboList() {
+        return addressBook.getTagComboList();
     }
 
     /**

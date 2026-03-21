@@ -28,6 +28,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagCombo;
+import seedu.address.model.tag.TagComboName;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddressBookTest {
@@ -40,7 +41,7 @@ public class AddressBookTest {
             new OutletName("TechCo Branch"),
             new OutletAddress("Raffles Place"),
             new OutletPostalCode("048623"));
-    private static final TagCombo TAG_COMBO_ONE = new TagCombo("developer", Set.of(
+    private static final TagCombo TAG_COMBO_ONE = new TagCombo(new TagComboName("developer"), Set.of(
             new Tag("python"), new Tag("java")
     ));
 
