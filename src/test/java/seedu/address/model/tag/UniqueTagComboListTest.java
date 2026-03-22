@@ -133,6 +133,19 @@ public class UniqueTagComboListTest {
     }
 
     @Test
+    public void equals() {
+        uniqueTagComboList.add(TAG_COMBO_ONE);
+
+        assertTrue(uniqueTagComboList.equals(uniqueTagComboList));
+
+        assertFalse(uniqueTagComboList.equals(new UniqueTagComboList()));
+
+        assertFalse(uniqueTagComboList.equals(null));
+
+        assertFalse(uniqueTagComboList.equals(5.0f));
+    }
+
+    @Test
     public void toStringMethod() {
         assertEquals(new ToStringBuilder(uniqueTagComboList)
                 .add("internalList", uniqueTagComboList.asUnmodifiableObservableList())
