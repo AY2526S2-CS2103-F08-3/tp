@@ -27,6 +27,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.outlet.Outlet;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.TagCombo;
 import seedu.address.model.tag.TagCounter;
 
 /**
@@ -241,6 +242,26 @@ public class AddByCsvCommandTest {
 
         @Override
         public void undo() throws CommandException {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<TagCombo> getTagComboList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasTagCombo(TagCombo tagCombo) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTagCombo(TagCombo target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addTagCombo(TagCombo tagCombo) {
             throw new AssertionError("This method should not be called.");
         }
     }

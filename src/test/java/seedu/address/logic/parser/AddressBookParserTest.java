@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ENTRY;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,8 +16,10 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.AddByCsvCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddOutletCommand;
+import seedu.address.logic.commands.AddTagComboCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTagComboCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -25,6 +27,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListOutletsCommand;
+import seedu.address.logic.commands.ListTagCombosCommand;
 import seedu.address.logic.commands.ListTagsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -33,6 +36,7 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.OutletBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.TagComboBuilder;
 
 public class AddressBookParserTest {
 
@@ -63,8 +67,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_ENTRY.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST_ENTRY), command);
     }
 
     @Test
@@ -72,8 +76,8 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                + INDEX_FIRST_ENTRY.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
+        assertEquals(new EditCommand(INDEX_FIRST_ENTRY, descriptor), command);
     }
 
     @Test
@@ -129,5 +133,26 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_unknownCommand_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
+    }
+
+    @Test
+    public void parseCommand_tagComboAdd() throws Exception {
+        AddTagComboCommand command =
+                (AddTagComboCommand) parser.parseCommand("addtagcombo ml dev t/python t/ml");
+        assertEquals(new AddTagComboCommand(new TagComboBuilder().withName("ml dev").withTags("ml", "python")
+                .build()), command);
+    }
+
+    @Test
+    public void parseCommand_listTagCombos() throws Exception {
+        assertTrue(parser.parseCommand(ListTagCombosCommand.COMMAND_WORD) instanceof ListTagCombosCommand);
+        assertTrue(parser.parseCommand(ListTagCombosCommand.COMMAND_WORD + " 3") instanceof ListTagCombosCommand);
+    }
+
+    @Test
+    public void parseCommand_deleteTagCombos() throws Exception {
+        DeleteTagComboCommand command = (DeleteTagComboCommand) parser.parseCommand(
+                DeleteTagComboCommand.COMMAND_WORD + " " + INDEX_FIRST_ENTRY.getOneBased());
+        assertEquals(new DeleteTagComboCommand(INDEX_FIRST_ENTRY), command);
     }
 }

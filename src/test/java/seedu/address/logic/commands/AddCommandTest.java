@@ -25,6 +25,7 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.outlet.Outlet;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.tag.TagCombo;
 import seedu.address.model.tag.TagCounter;
 import seedu.address.testutil.PersonBuilder;
 
@@ -226,6 +227,26 @@ public class AddCommandTest {
         public void setFilteredPersonPredicate(Predicate<? super Person> predicate) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public ObservableList<TagCombo> getTagComboList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasTagCombo(TagCombo tagCombo) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTagCombo(TagCombo target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addTagCombo(TagCombo tagCombo) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**
@@ -279,5 +300,4 @@ public class AddCommandTest {
             return new AddressBook();
         }
     }
-
 }

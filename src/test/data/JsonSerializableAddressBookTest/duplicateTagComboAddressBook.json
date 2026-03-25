@@ -1,0 +1,16 @@
+{
+  "tagCombos": [
+    {
+      "name": "ml dev",
+      "tags": ["ml", "python"]
+    },
+    {
+      "name": "ml dev",
+      "tags": ["java", "backend"]
+    },
+    {
+      "name": "admin assistant",
+      "tags": ["excel", "communication"]
+    }
+  ]
+}

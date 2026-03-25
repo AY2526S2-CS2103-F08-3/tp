@@ -18,6 +18,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.outlet.Outlet;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.TagCombo;
 import seedu.address.storage.Storage;
 
 /**
@@ -95,5 +96,10 @@ public class LogicManager implements Logic {
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public ObservableList<TagCombo> getTagComboList() {
+        return model.getTagComboList();
     }
 }

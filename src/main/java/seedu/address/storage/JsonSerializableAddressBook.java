@@ -13,6 +13,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.outlet.Outlet;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.TagCombo;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -22,21 +23,27 @@ class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
     public static final String MESSAGE_DUPLICATE_OUTLET = "Outlets list contains duplicate outlet(s).";
+    public static final String MESSAGE_DUPLICATE_TAG_COMBO = "Tag Combo list contains duplicate outlet(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
     private final List<JsonAdaptedOutlet> outlets = new ArrayList<>();
+    private final List<JsonAdaptedTagCombo> tagCombos = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
      */
     @JsonCreator
     public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
-            @JsonProperty("outlets") List<JsonAdaptedOutlet> outlets) {
+            @JsonProperty("outlets") List<JsonAdaptedOutlet> outlets,
+            @JsonProperty("tagCombos") List<JsonAdaptedTagCombo> tagCombos) {
         if (persons != null) {
             this.persons.addAll(persons);
         }
         if (outlets != null) {
             this.outlets.addAll(outlets);
+        }
+        if (tagCombos != null) {
+            this.tagCombos.addAll(tagCombos);
         }
     }
 
@@ -48,6 +55,7 @@ class JsonSerializableAddressBook {
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
         outlets.addAll(source.getOutletList().stream().map(JsonAdaptedOutlet::new).collect(Collectors.toList()));
+        tagCombos.addAll(source.getTagComboList().stream().map(JsonAdaptedTagCombo::new).collect(Collectors.toList()));
     }
 
     /**
@@ -70,6 +78,13 @@ class JsonSerializableAddressBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_OUTLET);
             }
             addressBook.addOutlet(outlet);
+        }
+        for (JsonAdaptedTagCombo jsonAdaptedTagCombo : tagCombos) {
+            TagCombo tagCombo = jsonAdaptedTagCombo.toModelType();
+            if (addressBook.hasTagCombo(tagCombo)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_TAG_COMBO);
+            }
+            addressBook.addTagCombo(tagCombo);
         }
         return addressBook;
     }

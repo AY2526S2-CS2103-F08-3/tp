@@ -9,6 +9,7 @@ import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.outlet.Outlet;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.TagCombo;
 import seedu.address.model.tag.TagCounter;
 
 /**
@@ -127,7 +128,25 @@ public interface Model {
      * The outlet identity of {@code editedOutlet} must not be the same as another existing outlet in the address
      * book.
      */
+
     void setOutlet(Outlet target, Outlet editedOutlet);
+
+    /**
+     * Returns true if a {@code TagCombo} with the same identity as tagCombo exists in the {@code AddressBook}.
+     */
+    boolean hasTagCombo(TagCombo tagCombo);
+
+    /**
+     * Deletes the given {@code TagCombo}.
+     * The {@code TagCombo} must exist in the {@code AddressBook}.
+     */
+    void deleteTagCombo(TagCombo target);
+
+    /**
+     * Adds the given {@code TagCombo}.
+     * The given {@code TagCombo} must not already exist in the {@code AddressBook}.
+     */
+    void addTagCombo(TagCombo tagCombo);
 
     /** Returns an unmodifiable view of the filtered outlet list */
     ObservableList<Outlet> getFilteredOutletList();
@@ -147,6 +166,11 @@ public interface Model {
      * Returns a list of the tags in the model, along with their frequencies in descending order.
      */
     TagCounter getTagCounter();
+
+    /**
+     * Returns the list of tag combos.
+     */
+    ObservableList<TagCombo> getTagComboList();
 
     void recordCommand(UndoableCommand undoableCommand);
 
