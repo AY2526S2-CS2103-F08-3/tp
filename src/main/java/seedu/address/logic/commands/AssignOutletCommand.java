@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,6 @@ public class AssignOutletCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Assigned %1$s to outlet %2$s";
     public static final String MESSAGE_NO_OUTLETS_AVAILABLE = "No outlets available to assign.";
-    public static final String MESSAGE_CANDIDATE_POSTAL_NOT_FOUND = "Candidate postal code %1$s is not in SG data.";
     public static final String MESSAGE_MISSING_POSTAL_DATA =
             "Unable to load SG postal dataset from resources: /data/SG_postal.csv";
 
@@ -115,14 +115,27 @@ public class AssignOutletCommand extends Command {
         String candidatePostal = normalizePostal(person.getPostalCode().value);
         Coordinate candidateCoordinate = SG_POSTAL_COORDINATES.get(candidatePostal);
         if (candidateCoordinate == null) {
-            throw new CommandException(String.format(
-                    MESSAGE_CANDIDATE_POSTAL_NOT_FOUND, person.getPostalCode().value));
+            List<Outlet> outletsNotInSgData = new ArrayList<>();
+            for (Outlet outlet : outlets) {
+                Coordinate outletCoordinate = SG_POSTAL_COORDINATES.get(
+                        normalizePostal(outlet.getPostalCode().value));
+                if (outletCoordinate == null) {
+                    outletsNotInSgData.add(outlet);
+                }
+            }
+
+            if (!outletsNotInSgData.isEmpty()) {
+                return pickRandomOutlet(outletsNotInSgData);
+            }
+
+            return pickRandomOutlet(outlets);
         }
 
         Outlet nearestOutlet = null;
         double nearestDistanceSquared = Double.MAX_VALUE;
         for (Outlet outlet : outlets) {
-            Coordinate outletCoordinate = SG_POSTAL_COORDINATES.get(normalizePostal(outlet.getPostalCode().value));
+            Coordinate outletCoordinate = SG_POSTAL_COORDINATES.get(
+                    normalizePostal(outlet.getPostalCode().value));
             if (outletCoordinate == null) {
                 continue;
             }
@@ -138,6 +151,10 @@ public class AssignOutletCommand extends Command {
             return nearestOutlet;
         }
 
+        return pickRandomOutlet(outlets);
+    }
+
+    private Outlet pickRandomOutlet(List<Outlet> outlets) {
         int randomIndex = ThreadLocalRandom.current().nextInt(outlets.size());
         return outlets.get(randomIndex);
     }
