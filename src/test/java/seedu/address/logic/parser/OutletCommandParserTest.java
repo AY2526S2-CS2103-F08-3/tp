@@ -50,6 +50,18 @@ public class OutletCommandParserTest {
     }
 
     @Test
+    public void parse_listCommandWithArguments_failure() {
+        assertParseFailure(parser, "list extra",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OutletCommandParser.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_emptyArgs_failure() {
+        assertParseFailure(parser, "",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OutletCommandParser.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_invalidSubcommand_failure() {
         assertParseFailure(parser, "unknown",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, OutletCommandParser.MESSAGE_USAGE));

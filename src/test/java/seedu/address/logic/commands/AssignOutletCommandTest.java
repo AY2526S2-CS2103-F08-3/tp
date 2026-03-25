@@ -77,15 +77,124 @@ public class AssignOutletCommandTest {
     }
 
     @Test
+    public void execute_noOutletsAvailable_failure() {
+        Model localModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        AssignOutletCommand assignOutletCommand = new AssignOutletCommand(INDEX_FIRST_ENTRY);
+
+        assertCommandFailure(assignOutletCommand, localModel, AssignOutletCommand.MESSAGE_NO_OUTLETS_AVAILABLE);
+    }
+
+    @Test
+    public void execute_withoutOutletIndexNearest_success() {
+        Model localModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Outlet furtherOutlet = new OutletBuilder().withName("Further Outlet").withAddress("Addr 1")
+                .withPostalCode("018907").build();
+        Outlet nearestOutlet = new OutletBuilder().withName("Nearest Outlet").withAddress("Addr 2")
+                .withPostalCode("018906").build();
+        localModel.addOutlet(furtherOutlet);
+        localModel.addOutlet(nearestOutlet);
+
+        Person originalPerson = localModel.getFilteredPersonList().get(INDEX_FIRST_ENTRY.getZeroBased());
+        Person personWithKnownPostal = new PersonBuilder(originalPerson).withPostalCode("018906").build();
+        localModel.setPerson(originalPerson, personWithKnownPostal);
+
+        AssignOutletCommand assignOutletCommand = new AssignOutletCommand(INDEX_FIRST_ENTRY);
+        Person assignedPerson = new PersonBuilder(personWithKnownPostal).withWorkingAddress(nearestOutlet).build();
+        String expectedMessage = String.format(AssignOutletCommand.MESSAGE_SUCCESS, personWithKnownPostal.getName(),
+                nearestOutlet.getOutletName());
+
+        Model expectedModel = new ModelManager(new AddressBook(localModel.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personWithKnownPostal, assignedPerson);
+
+        assertCommandSuccess(assignOutletCommand, localModel, expectedMessage, expectedModel,
+                UiAction.UPDATE_RIGHT_PANE,
+                Optional.of(new PersonContent(assignedPerson, "Candidate #" + INDEX_FIRST_ENTRY.getOneBased())));
+    }
+
+    @Test
+    public void execute_candidatePostalMissing_success() {
+        Model localModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Outlet outletInPostalData = new OutletBuilder().withName("Marina Outlet").withAddress("Addr 1")
+                .withPostalCode("018906").build();
+        localModel.addOutlet(outletInPostalData);
+
+        AssignOutletCommand assignOutletCommand = new AssignOutletCommand(INDEX_FIRST_ENTRY);
+        Person personToAssign = localModel.getFilteredPersonList().get(INDEX_FIRST_ENTRY.getZeroBased());
+        Person assignedPerson = new PersonBuilder(personToAssign).withWorkingAddress(outletInPostalData).build();
+        String expectedMessage = String.format(AssignOutletCommand.MESSAGE_SUCCESS, personToAssign.getName(),
+                outletInPostalData.getOutletName());
+
+        Model expectedModel = new ModelManager(new AddressBook(localModel.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToAssign, assignedPerson);
+
+        assertCommandSuccess(assignOutletCommand, localModel, expectedMessage, expectedModel,
+                UiAction.UPDATE_RIGHT_PANE,
+                Optional.of(new PersonContent(assignedPerson, "Candidate #" + INDEX_FIRST_ENTRY.getOneBased())));
+    }
+
+    @Test
+    public void execute_outletPostalMissing_success() {
+        Model localModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Outlet outletNotInPostalData = new OutletBuilder().withName("Unknown Outlet").withAddress("Addr 1")
+                .withPostalCode("640123").build();
+        localModel.addOutlet(outletNotInPostalData);
+
+        Person originalPerson = localModel.getFilteredPersonList().get(INDEX_FIRST_ENTRY.getZeroBased());
+        Person personWithKnownPostal = new PersonBuilder(originalPerson).withPostalCode("018906").build();
+        localModel.setPerson(originalPerson, personWithKnownPostal);
+
+        AssignOutletCommand assignOutletCommand = new AssignOutletCommand(INDEX_FIRST_ENTRY);
+        Person assignedPerson = new PersonBuilder(personWithKnownPostal).withWorkingAddress(outletNotInPostalData)
+                .build();
+        String expectedMessage = String.format(AssignOutletCommand.MESSAGE_SUCCESS, personWithKnownPostal.getName(),
+                outletNotInPostalData.getOutletName());
+
+        Model expectedModel = new ModelManager(new AddressBook(localModel.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personWithKnownPostal, assignedPerson);
+
+        assertCommandSuccess(assignOutletCommand, localModel, expectedMessage, expectedModel,
+                UiAction.UPDATE_RIGHT_PANE,
+                Optional.of(new PersonContent(assignedPerson, "Candidate #" + INDEX_FIRST_ENTRY.getOneBased())));
+    }
+
+    @Test
+    public void execute_candidatePostalMissingPrefersUnknown_success() {
+        Model localModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Outlet outletInPostalData = new OutletBuilder().withName("Marina Outlet").withAddress("Addr 1")
+                .withPostalCode("018906").build();
+        Outlet outletNotInPostalData = new OutletBuilder().withName("Unknown Outlet").withAddress("Addr 2")
+                .withPostalCode("640123").build();
+        localModel.addOutlet(outletInPostalData);
+        localModel.addOutlet(outletNotInPostalData);
+
+        AssignOutletCommand assignOutletCommand = new AssignOutletCommand(INDEX_FIRST_ENTRY);
+        Person personToAssign = localModel.getFilteredPersonList().get(INDEX_FIRST_ENTRY.getZeroBased());
+        Person assignedPerson = new PersonBuilder(personToAssign).withWorkingAddress(outletNotInPostalData).build();
+        String expectedMessage = String.format(AssignOutletCommand.MESSAGE_SUCCESS, personToAssign.getName(),
+                outletNotInPostalData.getOutletName());
+
+        Model expectedModel = new ModelManager(new AddressBook(localModel.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToAssign, assignedPerson);
+
+        assertCommandSuccess(assignOutletCommand, localModel, expectedMessage, expectedModel,
+                UiAction.UPDATE_RIGHT_PANE,
+                Optional.of(new PersonContent(assignedPerson, "Candidate #" + INDEX_FIRST_ENTRY.getOneBased())));
+    }
+
+    @Test
     public void equals() {
         AssignOutletCommand assignFirstCommand = new AssignOutletCommand(INDEX_FIRST_ENTRY, INDEX_FIRST_ENTRY);
         AssignOutletCommand assignSecondCommand = new AssignOutletCommand(INDEX_SECOND_ENTRY, INDEX_SECOND_ENTRY);
+        AssignOutletCommand assignNearestCommand = new AssignOutletCommand(INDEX_FIRST_ENTRY);
 
         assertTrue(assignFirstCommand.equals(assignFirstCommand));
         assertTrue(assignFirstCommand.equals(new AssignOutletCommand(INDEX_FIRST_ENTRY, INDEX_FIRST_ENTRY)));
+        assertTrue(assignNearestCommand.equals(new AssignOutletCommand(INDEX_FIRST_ENTRY)));
         assertFalse(assignFirstCommand.equals(1));
         assertFalse(assignFirstCommand.equals(null));
         assertFalse(assignFirstCommand.equals(assignSecondCommand));
+        assertFalse(assignFirstCommand.equals(assignNearestCommand));
+        assertFalse(assignNearestCommand.equals(assignFirstCommand));
     }
 
     @Test
