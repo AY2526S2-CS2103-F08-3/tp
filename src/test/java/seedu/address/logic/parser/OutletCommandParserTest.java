@@ -6,8 +6,8 @@ import static seedu.address.logic.commands.CommandTestUtil.OUTLET_NAME_DESC_ALPH
 import static seedu.address.logic.commands.CommandTestUtil.OUTLET_POSTAL_CODE_DESC_ALPHA;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ENTRY;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ENTRY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ENTRY;
 
 import org.junit.jupiter.api.Test;
@@ -37,12 +37,12 @@ public class OutletCommandParserTest {
 
     @Test
     public void parse_assignCommand_success() {
-        assertParseSuccess(parser, "assign 1 2", new AssignOutletCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON));
+        assertParseSuccess(parser, "assign 1 2", new AssignOutletCommand(INDEX_FIRST_ENTRY, INDEX_SECOND_ENTRY));
     }
 
     @Test
     public void parse_unassignCommand_success() {
-        assertParseSuccess(parser, "unassign 1", new UnassignOutletCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "unassign 1", new UnassignOutletCommand(INDEX_FIRST_ENTRY));
     }
 
     @Test
