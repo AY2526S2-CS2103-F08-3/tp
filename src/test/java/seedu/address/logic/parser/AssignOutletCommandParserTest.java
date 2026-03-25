@@ -17,11 +17,12 @@ public class AssignOutletCommandParserTest {
     @Test
     public void parse_validArgs_returnsAssignOutletCommand() {
         assertParseSuccess(parser, "1 2", new AssignOutletCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON));
+        assertParseSuccess(parser, "1", new AssignOutletCommand(INDEX_FIRST_PERSON));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "1",
+        assertParseFailure(parser, "",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignOutletCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "a 2",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignOutletCommand.MESSAGE_USAGE));
@@ -31,4 +32,3 @@ public class AssignOutletCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignOutletCommand.MESSAGE_USAGE));
     }
 }
-

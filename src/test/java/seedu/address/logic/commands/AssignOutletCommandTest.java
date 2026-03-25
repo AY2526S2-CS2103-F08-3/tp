@@ -9,6 +9,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +24,8 @@ import seedu.address.model.outlet.Outlet;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.OutletBuilder;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.UiAction;
+import seedu.address.ui.content.PersonContent;
 
 /**
  * Contains integration tests for {@code AssignOutletCommand}.
@@ -51,7 +55,8 @@ public class AssignOutletCommandTest {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(personToAssign, assignedPerson);
 
-        assertCommandSuccess(assignOutletCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(assignOutletCommand, model, expectedMessage, expectedModel, UiAction.UPDATE_RIGHT_PANE,
+                Optional.of(new PersonContent(assignedPerson, "Candidate #" + INDEX_FIRST_PERSON.getOneBased())));
     }
 
     @Test
