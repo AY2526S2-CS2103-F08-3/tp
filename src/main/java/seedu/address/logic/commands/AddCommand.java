@@ -45,12 +45,6 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    public static final String MESSAGE_DUPLICATE_EMAIL_AND_PHONE = "A person with this phone number and email address "
-                                                                    + "is already in the address book.";
-    public static final String MESSAGE_DUPLICATE_EMAIL = "A person with this email address is already in the "
-                                                            + "address book.";
-    public static final String MESSAGE_DUPLICATE_PHONE = "A person with this phone number is already in the "
-                                                            + "address book.";
     public static final String RIGHT_PANE_HEADER = "NEW CANDIDATE ADDED";
 
     private final Person toAdd;
@@ -69,11 +63,10 @@ public class AddCommand extends UndoableCommand {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        try {
-            model.addPerson(toAdd);
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(e.getMessage());
+        if (model.hasPerson(toAdd)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
+        model.addPerson(toAdd);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)),
                 UiAction.UPDATE_RIGHT_PANE, Optional.of(new PersonContent(toAdd, RIGHT_PANE_HEADER)));

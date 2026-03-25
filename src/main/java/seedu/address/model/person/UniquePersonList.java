@@ -38,38 +38,14 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Checks if the given {@code personToCheck} has a phone number or email address that already exists
-     * in the list, excluding the specified {@code personToIgnore}.
-     */
-    private void checkDuplicateFields(Person personToCheck, Person personToIgnore) {
-        List<String> conflicts = new ArrayList<>();
-
-        for (Person person : internalList) {
-            if (person.equals(personToIgnore)) {
-                continue;
-            }
-            if (person.getPhone().equals(personToCheck.getPhone())) {
-                conflicts.add("phone number");
-            }
-            if (person.getEmail().equals(personToCheck.getEmail())) {
-                conflicts.add("email address");
-            }
-        }
-
-        if (!conflicts.isEmpty()) {
-            throw new DuplicatePersonException(
-                    "A person with this " + String.join(" and ", conflicts) + " is already in the address book."
-            );
-        }
-    }
-
-    /**
      * Adds a person to the list.
      * The person must not already exist in the list.
      */
     public void add(Person toAdd) {
         requireNonNull(toAdd);
-        checkDuplicateFields(toAdd, null);
+        if (contains(toAdd)) {
+            throw new DuplicatePersonException();
+        }
         internalList.add(toAdd);
     }
 
@@ -86,7 +62,9 @@ public class UniquePersonList implements Iterable<Person> {
             throw new PersonNotFoundException();
         }
 
-        checkDuplicateFields(editedPerson, target);
+        if (!target.isSamePerson(editedPerson) && contains(editedPerson)) {
+            throw new DuplicatePersonException();
+        }
 
         internalList.set(index, editedPerson);
     }
