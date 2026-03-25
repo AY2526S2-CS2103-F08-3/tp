@@ -28,7 +28,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 import seedu.address.ui.UiAction;
 import seedu.address.ui.content.PersonContent;
@@ -66,6 +65,18 @@ public class EditCommand extends UndoableCommand {
 
     private final List<Person> editedPersons = new ArrayList<>();
     private final List<Person> originalPersons = new ArrayList<>();
+
+    /**
+     * @param indexes of the person(s) in the filtered person list to edit
+     * @param editPersonDescriptor details to edit the person(s) with
+     */
+    public EditCommand(Set<Index> indexes, EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(indexes);
+        requireNonNull(editPersonDescriptor);
+
+        this.indexes = indexes;
+        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+    }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
@@ -114,18 +125,6 @@ public class EditCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 editedPersons.size(), Messages.format(editedPersons.get(0))),
                 UiAction.UPDATE_RIGHT_PANE, Optional.of(new PersonContent(editedPersons.get(0), RIGHT_PANE_HEADER)));
-    }
-
-    /**
-     * @param indexes of the person(s) in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person(s) with
-     */
-    public EditCommand(Set<Index> indexes, EditPersonDescriptor editPersonDescriptor) {
-        requireNonNull(indexes);
-        requireNonNull(editPersonDescriptor);
-
-        this.indexes = indexes;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
     @Override
