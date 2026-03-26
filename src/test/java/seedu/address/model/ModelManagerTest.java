@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,11 @@ import seedu.address.model.outlet.OutletName;
 import seedu.address.model.outlet.OutletPostalCode;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagCombo;
+import seedu.address.model.tag.TagComboName;
 import seedu.address.model.tag.TagCounter;
+import seedu.address.model.tag.exceptions.DuplicateTagComboException;
+import seedu.address.model.tag.exceptions.TagComboNotFoundException;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -34,6 +39,12 @@ public class ModelManagerTest {
             new OutletName("FinServ"),
             new OutletAddress("Marina Bay"),
             new OutletPostalCode("018956"));
+    private static final TagCombo TAG_COMBO_ONE = new TagCombo(new TagComboName("ml dev"), Set.of(
+            new Tag("python"), new Tag("ml")
+    ));
+    private static final TagCombo TAG_COMBO_TWO = new TagCombo(new TagComboName("frontend java dev"), Set.of(
+            new Tag("frontend"), new Tag("java")
+    ));
 
     private ModelManager modelManager = new ModelManager();
 
@@ -184,6 +195,14 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(outletAddressBook, differentUserPrefs)));
+
+        // different Tag Combo -> return false
+        AddressBook tagComboAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        tagComboAddressBook.addOutlet(OUTLET_ALPHA);
+        tagComboAddressBook.addOutlet(OUTLET_BETA);
+        tagComboAddressBook.addTagCombo(TAG_COMBO_ONE);
+        modelManager = new ModelManager(tagComboAddressBook, userPrefs);
+        assertFalse(modelManager.equals(new ModelManager(outletAddressBook, userPrefs)));
     }
 
     @Test
@@ -197,5 +216,40 @@ public class ModelManagerTest {
         tagMap.put(new Tag("owesMoney"), 1);
 
         assertEquals(new TagCounter(tagMap), modelManager.getTagCounter());
+    }
+
+    @Test
+    public void hasTagCombo_nullTagCombo_throwsNullException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasTagCombo(null));
+    }
+
+    @Test
+    public void hasTagCombo_tagComboNotInAddressBook_returnsFalse() {
+        assertFalse(modelManager.hasTagCombo(TAG_COMBO_ONE));
+    }
+
+    @Test
+    public void hasTagCombo_tagComboInAddressBook_returnsTrue() {
+        modelManager.addTagCombo(TAG_COMBO_ONE);
+        assertTrue(modelManager.hasTagCombo(TAG_COMBO_ONE));
+    }
+
+    @Test
+    public void addTagCombo_tagComboInAddressBook_throwsDuplicateTagComboException() {
+        modelManager.addTagCombo(TAG_COMBO_ONE);
+        assertThrows(DuplicateTagComboException.class, () -> modelManager.addTagCombo(TAG_COMBO_ONE));
+    }
+
+    @Test
+    public void deleteTagCombo_tagComboNotInAddressBook_throwsTagComboNotFoundException() {
+        assertThrows(TagComboNotFoundException.class, () -> modelManager.deleteTagCombo(TAG_COMBO_ONE));
+    }
+
+    @Test
+    public void deleteTagCombo_tagComboInAddressBook_success() {
+        modelManager.addTagCombo(TAG_COMBO_ONE);
+        modelManager.deleteTagCombo(TAG_COMBO_ONE);
+
+        assertFalse(modelManager.hasTagCombo(TAG_COMBO_ONE));
     }
 }

@@ -2,7 +2,6 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.outlet.Outlet;
 
@@ -14,8 +13,6 @@ public class OutletCard extends UiPart<Region> {
 
     public final Outlet outlet;
 
-    @FXML
-    private HBox cardPane;
     @FXML
     private Label id;
     @FXML

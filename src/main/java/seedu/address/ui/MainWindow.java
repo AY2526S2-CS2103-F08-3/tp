@@ -31,6 +31,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private TagComboPanel tagComboPanel;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -52,6 +53,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private VBox rightDisplayPlaceHolder;
+
+    @FXML
+    private VBox tagComboDisplayPlaceHolder;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -79,12 +83,17 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-        OutletListPanel outletListPanel = new OutletListPanel(logic.getFilteredOutletList());
-        outletListPanelPlaceholder.getChildren().add(outletListPanel.getRoot());
         personListPanel.setOnPersonSelected((person, header) -> {
             DetailedPersonCard card = new DetailedPersonCard(person, header);
-            detailedPersonPlaceholder.getChildren().setAll(card.getRoot());
+            rightDisplayPlaceHolder.getChildren().setAll(card.getRoot());
+            showDetails();
         });
+
+        OutletListPanel outletListPanel = new OutletListPanel(logic.getFilteredOutletList());
+        outletListPanelPlaceholder.getChildren().add(outletListPanel.getRoot());
+
+        tagComboPanel = new TagComboPanel(logic.getTagComboList());
+        tagComboDisplayPlaceHolder.getChildren().add(tagComboPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -118,10 +127,11 @@ public class MainWindow extends UiPart<Stage> {
         } else {
             helpWindow.focus();
         }
+        logger.info("Opened help window.");
     }
 
     /**
-     * Displays the selected person on the right as a {@Code DetailedPersonCard}.
+     * Displays the selected person on the right as a {@code DetailedPersonCard}.
      */
     public void showPersonDetails(Person person, int displayedIndex) {
         DetailedPersonCard detailedCard = new DetailedPersonCard(person, "Candidate #" + displayedIndex);
@@ -129,7 +139,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Displays the selected person on the right as a {@Code DetailedPersonCard}.
+     * Displays the selected person on the right as a {@code DetailedPersonCard}.
      */
     public void showPersonDetails(Person person, String header) {
         DetailedPersonCard detailedCard = new DetailedPersonCard(person, header);
@@ -150,6 +160,30 @@ public class MainWindow extends UiPart<Stage> {
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
         primaryStage.hide();
+    }
+
+    /**
+     * Makes the TagComboPanel visible on the right pane.
+     */
+    private void showTagCombo() {
+        tagComboDisplayPlaceHolder.setVisible(true);
+        tagComboDisplayPlaceHolder.setManaged(true);
+        rightDisplayPlaceHolder.setVisible(false);
+        rightDisplayPlaceHolder.setManaged(false);
+
+        logger.info("Right pane placeholder hidden, right pane now showing TagCombos panel.");
+    }
+
+    /**
+     * Makes the rightDisplayPlaceHolder visible on the right pane.
+     */
+    private void showDetails() {
+        tagComboDisplayPlaceHolder.setVisible(false);
+        tagComboDisplayPlaceHolder.setManaged(false);
+        rightDisplayPlaceHolder.setVisible(true);
+        rightDisplayPlaceHolder.setManaged(true);
+
+        logger.info("TagCombos Panel hidden, right pane now showing person/tagcount info.");
     }
 
     public PersonListPanel getPersonListPanel() {
@@ -176,7 +210,12 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             if (commandResult.getUiAction() == UiAction.UPDATE_RIGHT_PANE) {
+                showDetails();
                 commandResult.getContent().get().render(rightDisplayPlaceHolder);
+            }
+
+            if (commandResult.getUiAction() == UiAction.SHOW_TAG_COMBO) {
+                showTagCombo();
             }
 
             return commandResult;

@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Optional;
-
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;

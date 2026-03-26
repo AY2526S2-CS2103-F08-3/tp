@@ -7,5 +7,6 @@ public enum UiAction {
     NONE,
     SHOW_HELP,
     EXIT,
-    UPDATE_RIGHT_PANE
+    UPDATE_RIGHT_PANE,
+    SHOW_TAG_COMBO
 }

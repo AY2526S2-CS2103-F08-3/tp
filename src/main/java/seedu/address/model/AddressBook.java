@@ -11,6 +11,8 @@ import seedu.address.model.outlet.Outlet;
 import seedu.address.model.outlet.UniqueOutletList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.tag.TagCombo;
+import seedu.address.model.tag.UniqueTagComboList;
 
 /**
  * Wraps all data at the address-book level
@@ -20,6 +22,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueOutletList outlets;
+    private final UniqueTagComboList tagCombos;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -31,6 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         outlets = new UniqueOutletList();
+        tagCombos = new UniqueTagComboList();
     }
 
     public AddressBook() {}
@@ -61,6 +65,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setPersons(newData.getPersonList());
         setOutlets(newData.getOutletList());
+        setTagCombos(newData.getTagComboList());
     }
 
     /**
@@ -146,6 +151,33 @@ public class AddressBook implements ReadOnlyAddressBook {
         outlets.remove(outlet);
     }
 
+    /**
+     * Adds a {@code tagCombo} to the {@code AddressBook}.
+     * The {@code tagCombo} must not already exist in the {@code AddressBook}.
+     */
+    public void addTagCombo(TagCombo tagCombo) {
+        tagCombos.add(tagCombo);
+    }
+
+    /**
+     * Removes a {@code tagCombo} from the {@code AddressBook}.
+     * The {@code tagCombo} must already exist in the {@code AddressBook}.
+     */
+    public void removeTagCombo(TagCombo tagCombo) {
+        tagCombos.remove(tagCombo);
+    }
+
+    /**
+     * Checks if the {@code tagCombo} exists in the {@code AddressBook} using {@code isSameTagCombo}.
+     */
+    public boolean hasTagCombo(TagCombo tagCombo) {
+        return tagCombos.contains(tagCombo);
+    }
+
+    public void setTagCombos(List<TagCombo> tagCombos) {
+        this.tagCombos.setTagCombos(tagCombos);
+    }
+
     //// util methods
 
     @Override
@@ -153,6 +185,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return new ToStringBuilder(this)
                 .add("persons", persons)
                 .add("outlets", outlets)
+                .add("tagCombos", tagCombos)
                 .toString();
     }
 
@@ -167,6 +200,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<TagCombo> getTagComboList() {
+        return tagCombos.asUnmodifiableObservableList();
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
@@ -178,11 +216,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         AddressBook otherAddressBook = (AddressBook) other;
-        return persons.equals(otherAddressBook.persons) && outlets.equals(otherAddressBook.outlets);
+        return persons.equals(otherAddressBook.persons) && outlets.equals(otherAddressBook.outlets)
+                && tagCombos.equals(otherAddressBook.tagCombos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(persons, outlets);
+        return Objects.hash(persons, outlets, tagCombos);
     }
 }
