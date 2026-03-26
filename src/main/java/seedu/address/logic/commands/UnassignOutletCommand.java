@@ -18,7 +18,7 @@ import seedu.address.ui.content.PersonContent;
 /**
  * Unassigns a candidate from their current outlet.
  */
-public class UnassignOutletCommand extends Command {
+public class UnassignOutletCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "unassign";
 
@@ -29,6 +29,9 @@ public class UnassignOutletCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Unassigned %1$s from working outlet";
     private final Index candidateIndex;
+
+    private Person personToUnassign;
+    private Person unassignedPerson;
 
     /**
      * Creates an UnassignOutletCommand to unassign the specified candidate.
@@ -47,8 +50,8 @@ public class UnassignOutletCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person personToUnassign = lastShownPersons.get(candidateIndex.getZeroBased());
-        Person unassignedPerson = new Person(personToUnassign.getName(), personToUnassign.getPhone(),
+        personToUnassign = lastShownPersons.get(candidateIndex.getZeroBased());
+        unassignedPerson = new Person(personToUnassign.getName(), personToUnassign.getPhone(),
                 personToUnassign.getEmail(), personToUnassign.getAddress(), personToUnassign.getPostalCode(),
                 personToUnassign.getTags(), null);
 
@@ -62,6 +65,16 @@ public class UnassignOutletCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, personToUnassign.getName()),
                 UiAction.UPDATE_RIGHT_PANE,
                 Optional.of(new PersonContent(unassignedPerson, "Candidate #" + candidateIndex.getOneBased())));
+    }
+
+    @Override
+    public void undo(Model model) {
+        model.setPerson(unassignedPerson, personToUnassign);
+    }
+
+    @Override
+    public void redo(Model model) {
+        model.setPerson(personToUnassign, unassignedPerson);
     }
 
     @Override

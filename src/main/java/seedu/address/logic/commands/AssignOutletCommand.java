@@ -28,7 +28,7 @@ import seedu.address.ui.content.PersonContent;
 /**
  * Assigns an outlet to a candidate.
  */
-public class AssignOutletCommand extends Command {
+public class AssignOutletCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "assign";
 
@@ -47,6 +47,9 @@ public class AssignOutletCommand extends Command {
 
     private final Index candidateIndex;
     private final Index outletIndex;
+
+    private Person personToAssign;
+    private Person assignedPerson;
 
     /**
      * Creates an AssignOutletCommand to assign the nearest outlet to the specified candidate.
@@ -81,11 +84,11 @@ public class AssignOutletCommand extends Command {
             throw new CommandException(MESSAGE_NO_OUTLETS_AVAILABLE);
         }
 
-        Person personToAssign = lastShownPersons.get(candidateIndex.getZeroBased());
+        personToAssign = lastShownPersons.get(candidateIndex.getZeroBased());
         Outlet outletToAssign = outletIndex == null
                 ? resolveNearestOutlet(personToAssign, lastShownOutlets)
                 : resolveSpecifiedOutlet(lastShownOutlets);
-        Person assignedPerson = new Person(personToAssign.getName(), personToAssign.getPhone(),
+        assignedPerson = new Person(personToAssign.getName(), personToAssign.getPhone(),
                 personToAssign.getEmail(), personToAssign.getAddress(), personToAssign.getPostalCode(),
                 personToAssign.getTags(), outletToAssign);
 
@@ -226,6 +229,16 @@ public class AssignOutletCommand extends Command {
             double longitudeDelta = longitude - other.longitude;
             return latitudeDelta * latitudeDelta + longitudeDelta * longitudeDelta;
         }
+    }
+
+    @Override
+    public void undo(Model model) {
+        model.setPerson(assignedPerson, personToAssign);
+    }
+
+    @Override
+    public void redo(Model model) {
+        model.setPerson(personToAssign, assignedPerson);
     }
 
     @Override
