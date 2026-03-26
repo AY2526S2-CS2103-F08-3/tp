@@ -148,9 +148,43 @@ Examples:
 
 Lists all tags in descending order, along with their frequencies.
 
+* Order is not guaranteed in the case of ties.
+
 Format: `listtags`
 
-* Order is not guaranteed in the case of ties.
+### Adding tag combos: `addtagcombo`
+
+Adds a tag combo to the Address Book.
+
+Format: `addtagcombo NAME t/TAG t/TAG [t/TAG]...`
+
+* The name of the tag combo must consist of only alphanumeric characters, and be at most 25 characters long.
+* Minimally 2 tags are needed to define a tag combo, as a tag combo with only one tag is functionally equivalent to a tag with an alias.
+
+Examples:
+* `addtagcombo ml dev t/python t/ml`
+* `addtagcombo java backend dev t/java t/backend t/docker`
+
+### Deleting tag combos: `deletetagcombo`
+
+Deletes a tag combo from the Address Book.
+
+Format: `deletetagcombo INDEX`
+
+* Deletes the tag combo at the specified `INDEX`.
+* The index refers to the index number shown in the displayed tag combo list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `deletetagcombo 1`
+
+### Listing tag combos: `listtagcombo`
+
+Lists all tag combos in the right pane.
+
+Format: `listtagcombo`
+
+* ![result for 'listtagcombo'](images/listTagComboResult.png)
 
 ### Deleting a person : `delete`
 
@@ -264,6 +298,9 @@ Action | Format, Examples
 **List** | `list`
 **Help** | `help`
 **List Tags** | `listtags`
+**Add Tag Combo** | `addtagcombo NAME t/TAG t/TAG [t/TAG]...`<br> e.g., `addtagcombo ml dev t/python t/ml`
+**Delete Tag Combo** | `deletetagcombo INDEX`<br> e.g., `deletetagcombo 1`
+**List Tag Combos** | `listtagcombo`
 **Add by csv** | `addcsv`
 **Add Outlet** | `outlet add n/<name> a/<address> pc/<postalCode>` <br> e.g., `outlet add n/FinServ a/Marina Bay pc/018956`
 **Delete Outlet** | `outlet delete <index>` <br> e.g., `outlet delete 1`

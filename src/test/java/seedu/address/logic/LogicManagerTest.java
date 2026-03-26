@@ -28,6 +28,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.UniqueTagComboList;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
@@ -90,6 +91,11 @@ public class LogicManagerTest {
     @Test
     public void getFilteredOutletList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredOutletList().remove(0));
+    }
+
+    @Test
+    public void getTagComboList_success() {
+        assertEquals(logic.getTagComboList(), new UniqueTagComboList().asUnmodifiableObservableList());
     }
 
     /**

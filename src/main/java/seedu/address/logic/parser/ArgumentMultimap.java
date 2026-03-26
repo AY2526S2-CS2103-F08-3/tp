@@ -75,4 +75,18 @@ public class ArgumentMultimap {
             throw new ParseException(Messages.getErrorMessageForDuplicatePrefixes(duplicatedPrefixes));
         }
     }
+
+    /**
+     * Throws a {@code ParseException} if any of the prefixes given in {@code prefixes} do not appear more than
+     * once among the arguments.
+     */
+    public void verifyDuplicatePrefixesPresent(Prefix... prefixes) throws ParseException {
+        Prefix[] nonDuplicatedPrefixes = Stream.of(prefixes).distinct()
+                .filter(prefix -> argMultimap.containsKey(prefix) && argMultimap.get(prefix).size() < 2)
+                .toArray(Prefix[]::new);
+
+        if (nonDuplicatedPrefixes.length > 0) {
+            throw new ParseException(Messages.getErrorMessageForNonDuplicatePrefixes(nonDuplicatedPrefixes));
+        }
+    }
 }

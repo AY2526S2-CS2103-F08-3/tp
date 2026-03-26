@@ -17,6 +17,7 @@ import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.outlet.Outlet;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.TagCombo;
 import seedu.address.model.tag.TagCounter;
 
 /**
@@ -31,7 +32,6 @@ public class ModelManager implements Model {
     private final Stack<Command> undoStack = new Stack<>();
     private final Stack<Command> redoStack = new Stack<>();
     private final FilteredList<Outlet> filteredOutlets;
-    private final TagCounter tagCounter;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -45,7 +45,6 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredOutlets = new FilteredList<>(this.addressBook.getOutletList());
-        tagCounter = new TagCounter(this.addressBook);
     }
 
     public ModelManager() {
@@ -147,6 +146,21 @@ public class ModelManager implements Model {
         addressBook.setOutlet(target, editedOutlet);
     }
 
+    @Override
+    public boolean hasTagCombo(TagCombo tagCombo) {
+        return addressBook.hasTagCombo(tagCombo);
+    }
+
+    @Override
+    public void deleteTagCombo(TagCombo target) {
+        addressBook.removeTagCombo(target);
+    }
+
+    @Override
+    public void addTagCombo(TagCombo tagCombo) {
+        addressBook.addTagCombo(tagCombo);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -242,6 +256,11 @@ public class ModelManager implements Model {
         requireNonNull(undoableCommand);
         undoStack.push(undoableCommand);
         redoStack.clear();
+    }
+
+    @Override
+    public ObservableList<TagCombo> getTagComboList() {
+        return addressBook.getTagComboList();
     }
 
     /**

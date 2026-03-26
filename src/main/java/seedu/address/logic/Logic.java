@@ -10,6 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.outlet.Outlet;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.TagCombo;
 
 /**
  * API of the Logic component
@@ -36,6 +37,9 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of outlets */
     ObservableList<Outlet> getFilteredOutletList();
+
+    /** Returns an unmodifiable view of the filtered list of tagcombos */
+    ObservableList<TagCombo> getTagComboList();
 
     /**
      * Returns the user prefs' address book file path.
