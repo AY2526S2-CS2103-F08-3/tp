@@ -24,10 +24,10 @@ public class ComparisonContent implements RightPaneContent {
 
     /**
      * Constructor for {@code ComparisonContent} with two Persons and their display headers
-     * @param firstPerson: the Person object representing the first person
-     * @param firstHeader: the first Person object's header string
-     * @param secondPerson: the Person object representing the second person
-     * @param secondHeader: the second Person object's header string
+     * @param firstPerson the Person object representing the first person
+     * @param firstHeader the first Person object's header string
+     * @param secondPerson the Person object representing the second person
+     * @param secondHeader the second Person object's header string
      */
     public ComparisonContent(Person firstPerson, String firstHeader, Person secondPerson,
                              String secondHeader) {
