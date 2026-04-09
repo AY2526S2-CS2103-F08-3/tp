@@ -2,10 +2,13 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -37,6 +40,8 @@ public class CompareCommand extends Command {
     private final Index firstIndex;
     private final Index secondIndex;
 
+    private static final Logger logger = LogsCenter.getLogger(CompareCommand.class);
+
     /**
      * Creates a {@code CompareCommand} to compare the candidates at the given indices.
      */
@@ -50,6 +55,9 @@ public class CompareCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        logger.info("Executing compare command with indices: "
+                + firstIndex.getOneBased() + ", " + secondIndex.getOneBased());
 
         if (firstIndex.equals(secondIndex)) {
             throw new CommandException(MESSAGE_SAME_INDEX);
@@ -70,6 +78,9 @@ public class CompareCommand extends Command {
 
         ComparisonContent content = new ComparisonContent(
                 firstPerson, firstHeader, secondPerson, secondHeader);
+
+        logger.info("Comparison result created for: "
+                + firstPerson.getName() + " and " + secondPerson.getName());
 
         return new CommandResult(
                 String.format(MESSAGE_COMPARE_SUCCESS,

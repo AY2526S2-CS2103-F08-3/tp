@@ -14,11 +14,13 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddByCsvCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddOutletCommand;
 import seedu.address.logic.commands.AddTagComboCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.CompareCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteTagComboCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -63,6 +65,14 @@ public class AddressBookParserTest {
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
+    }
+
+    @Test
+    public void parseCommand_compare() throws Exception {
+        CompareCommand command = (CompareCommand) parser.parseCommand(CompareCommand.COMMAND_WORD +
+                "1 2");
+        assertEquals(new CompareCommand(Index.fromOneBased(1),
+                Index.fromOneBased(2)), command);
     }
 
     @Test

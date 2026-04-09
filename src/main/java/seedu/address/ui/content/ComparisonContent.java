@@ -2,12 +2,14 @@ package seedu.address.ui.content;
 
 import java.util.Objects;
 
-import javafx.geometry.Insets;
-import javafx.scene.layout.HBox;
+import javafx.geometry.Orientation;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seedu.address.model.person.Person;
 import seedu.address.ui.DetailedPersonCard;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  *  Renders two {@code DetailedPersonCard} instances side-by-side in the right pane,
@@ -37,24 +39,29 @@ public class ComparisonContent implements RightPaneContent {
         this.secondHeader = secondHeader;
     }
 
-    //need to implemnet abstract vbox method...
-
     // renders two VBoxes which both will scale, in a side-by-side HBox configuration.
     @Override
     public void render(VBox contentPlaceholder) {
+        requireNonNull(contentPlaceholder);
+
         DetailedPersonCard firstCard = new DetailedPersonCard(firstPerson, firstHeader);
         DetailedPersonCard secondCard = new DetailedPersonCard(secondPerson, secondHeader);
 
         VBox firstWrapper = new VBox(firstCard.getRoot());
         VBox secondWrapper = new VBox(secondCard.getRoot());
 
-        HBox.setHgrow(firstWrapper, Priority.ALWAYS);
-        HBox.setHgrow(secondWrapper, Priority.ALWAYS);
+        VBox.setVgrow(firstWrapper, Priority.ALWAYS);
+        VBox.setVgrow(secondWrapper, Priority.ALWAYS);
 
-        HBox sideBySide = new HBox(CARD_SPACING, firstWrapper, secondWrapper);
-        sideBySide.setPadding(new Insets(CARD_SPACING));
+        SplitPane splitPane = new SplitPane(firstWrapper, secondWrapper);
+        splitPane.setDividerPositions(0.5);
+        splitPane.setOrientation(Orientation.HORIZONTAL);
 
-        contentPlaceholder.getChildren().setAll(sideBySide);
+        VBox.setVgrow(splitPane, Priority.ALWAYS);
+        contentPlaceholder.getChildren().setAll(splitPane);
+
+        assert contentPlaceholder.getChildren().size() == 1 :
+                "render() should leave exactly one child in the placeholder";
     }
 
     @Override
