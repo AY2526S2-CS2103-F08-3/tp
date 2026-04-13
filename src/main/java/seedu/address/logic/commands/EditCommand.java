@@ -57,7 +57,9 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited %d person(s). ";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_INDEX = "Duplicate indexes are not allowed.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "%1$s already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON_WITHIN = "This change would cause duplicate persons in the "
+            + "address book.";
     public static final String RIGHT_PANE_HEADER = "CANDIDATE EDITED";
     public static final String UNDO_SUCCESS = "Undo successful: Reverted edits on %d person(s). First: %s";
     public static final String REDO_SUCCESS = "Redo successful: Re-edited %d person(s). First: %s";
@@ -113,7 +115,8 @@ public class EditCommand extends UndoableCommand {
 
             for (Person personInModel : model.getAddressBook().getPersonList()) {
                 if (!personInModel.equals(original) && personInModel.isSamePerson(edited)) {
-                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+                    throw new CommandException(
+                            String.format(MESSAGE_DUPLICATE_PERSON, Messages.format(edited)));
                 }
             }
         }
@@ -121,7 +124,7 @@ public class EditCommand extends UndoableCommand {
         for (int i = 0; i < editedPersons.size(); i++) {
             for (int j = i + 1; j < editedPersons.size(); j++) {
                 if (editedPersons.get(i).isSamePerson(editedPersons.get(j))) {
-                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+                    throw new CommandException(MESSAGE_DUPLICATE_PERSON_WITHIN);
                 }
             }
         }

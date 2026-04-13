@@ -981,6 +981,39 @@ testers are expected to do more *exploratory* testing.
    4. Test case: `outlet delete 0`<br>
    Expected: Deletion fails with invalid index error.
 
+### Undoing command (`undo`)
+
+1. Prerequisites: An `UndoableCommand` has just been executed successfully. For `Command`s that support `UndoableCommand`, please see the list below. 
+   1. `AddByCsvCommand`
+   2. `AddCommand`
+   3. `DeleteCommand`
+   4. `EditCommand`
+   5. `AddTagComboCommand`
+   6. `DeleteTagComboCommand`
+   7. `AddOutletCommand`
+   8. `DeleteOutletCommand`
+   9. `EditOutletCommand`
+   10. `AssignOutletCommand`
+   11. `UnassignOutletCommand`
+   12. `ListCommand`
+   13. `FindCommand`
+   14. `FilterCommand`
+   15. `ClearCommand`
+
+2. Test case: `delete 2` followed by `undo` <br>
+   Expected: Candidate #2 is added back at the second index of the list.
+
+3. Test case: `filter t/python` followed by `list` followed by `undo` <br> 
+   Expected: The candidate list shows only persons with the `java` tag.
+
+
+### Redoing command (`redo`)
+
+1. Prerequisites: An `UndoCommand` has just been executed successfully and no new `UndoableCommand` has been executed successfully since then. Please see `undo` section above for a list of `UndoableCommand`s. 
+
+2. Test case: `delete 2` followed by `undo` followed by `redo` <br>
+   Expected: Candidate #2 is removed from the list. 
+
 ## **Appendix: Planned Enhancements**
 
 Number of Team Members: 4
