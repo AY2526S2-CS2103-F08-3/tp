@@ -46,7 +46,7 @@ public class Tag {
         }
 
         Tag otherTag = (Tag) other;
-        return tagName.equals(otherTag.tagName);
+        return tagName.toLowerCase().equals(otherTag.tagName.toLowerCase());
     }
 
     public String getTagName() {

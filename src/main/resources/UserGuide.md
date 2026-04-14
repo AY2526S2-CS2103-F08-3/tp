@@ -1,27 +1,17 @@
----
-layout: page
-title: User Guide
----
-
-HireLens is a **desktop app for HR recruiters to manage candidates, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, HireLens can get your candidate management tasks done faster than traditional GUI apps.
-
-* Table of Contents 
-{:toc}
+HireLens is a desktop app for HR recruiters to manage candidates, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, HireLens can get your candidate management tasks done faster than traditional GUI apps.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start
+Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+1. Ensure you have Java `17` or above installed in your Computer.
+   Mac users: Ensure you have the precise JDK version prescribed https://se-education.org/guides/tutorials/javaInstallationMac.html.
 
-2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103-F08-3/tp/releases/tag/v1.5).
+2. Download the latest `.jar` file from https://github.com/AY2526S2-CS2103-F08-3/tp/releases/tag/v1.5
 
 3. Copy the file to the folder you want to use as the _home folder_ for your HireLens.
 
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar HireLens.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar HireLens.jar` command to run the application.
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -36,15 +26,11 @@ HireLens is a **desktop app for HR recruiters to manage candidates, optimized fo
 
     * `exit` : Exits the app.
 
-6. Refer to the [Features](#features) below for details of each command.
+6. Refer to the Features below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## UI Components and Glossary
-
-![UiComponents](images/UiComponents.png)
-
-The image above shows the key UI Components, which are described in detail below.
 
 1. **Command Box**: This is where commands are entered into.
 2. **Status Message Box**: Upon submitting a command, this is where the status message is displayed.
@@ -61,9 +47,7 @@ The image above shows the key UI Components, which are described in detail below
 
 ## Features
 
-<div markdown="block" class="alert alert-info">
-
-**:information_source: Notes about the command format:**<br>
+**Notes about the command format**
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
@@ -83,7 +67,6 @@ The image above shows the key UI Components, which are described in detail below
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</div>
 
 ### Viewing help : `help`
 
@@ -101,9 +84,8 @@ Adds a candidate to the candidate list.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE [t/TAG]…​`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+**Tip:**
 A candidate can have any number of tags (including 0)
-</div>
 
 The full details of the candidate are displayed on the **Right Panel** on success.
 
@@ -142,16 +124,17 @@ Examples:
 * `addcsv data/candidates.csv`
 * `addcsv 1/2/test.csv`
 
-<div markdown="span" class="alert alert-warning">**Caution:**
+**Caution:**
 Please do not use Excel to create/edit CSV files for `addcsv`.
 Use a plain text editor to avoid hidden formatting/encoding issues for the headers.
-</div>
 
 ### Listing all candidates : `list`
 
 Shows a list of all candidates in the candidate list.
 
 Format: `list`
+
+All candidates will be displayed in the candidate list
 
 Tag counts are displayed on the **Right Panel** on success, similar to calling `listtags`.
 
@@ -175,9 +158,7 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st candidate to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd candidate to be `Betsy Crower` and clears all existing tags.
 *  `edit 1 2 3 t/python` Edits the tags of the 1st, 2nd and 3rd candidate to be replaced by python.
-*  `edit 1 t/Java` displays the following results.
-
-![result for `edit 1 t/Java`](images/editPaulineJava.png)
+*  `edit 1 t/Java` displays the following results. Status Message Panel displays `Edited 1 person(s). First: Alice Pauline; Phone: 94351253; Email: alice@example.com; Address: 123 Jurong West Ave 6 #08-111; Postal Code: 640123; Tags: [java]`, Alice Pauline's updated details are displayed in the Right Panel with the header `CANDIDATE EDITED`, and the current candidate list is also updated to reflect the change.
 
 ### Locating candidates by name : `find`
 
@@ -196,8 +177,8 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 * `find John` returns `john` and `John Doe`
-* `find carl ethan` returns `Carl Kurz`, `Ethan Lim` <br>
-  ![result for 'find carl ethan'](images/findCarlEthanResult.png)
+* `find carl ethan` returns `Carl Kurz`, `Ethan Lim`
+* The Status Message Panel will display the no. of candidates listed, e.g. `2 persons listed!`, and the candidate list will display the candidates which match the search criteria.
 
 ### Locating candidates by tag: `filter`
 
@@ -215,7 +196,7 @@ Examples:
 * `filter tc/ml dev`
 * `filter t/java tc/ml dev`
 * `filter t/Java t/Python` returns `Benson Meier`, `Natalie Lim`.
-  ![result for 'filter t/python t/java'](images/filterPythonJavaResult.png)
+* In all cases the Status Message Panel should display the number of persons listed, e.g. `2 persons listed!`
 
 ### Comparing Candidates: `compare`
 
@@ -224,7 +205,7 @@ Information clears when another action takes up the right panel.
 
 Format: `compare INDEX_1 INDEX_2`
 
-Example: `compare 1 2` selects candidate numbered 1 and 2 in the list for comparison, displaying them in the right pane. 
+Example: `compare 1 2` selects candidate numbered 1 and 2 in the list for comparison, displaying them in the right pane.
 * Order is the candidate identified by INDEX_1 on the left and that by INDEX_2 on the right
 * Status message box shows: `Comparing candidate 1 and candidate 2.`
 
@@ -240,7 +221,7 @@ Format: `listtags`
 ### Adding tag combos: `addtagcombo`
 
 Adds a tag combo to the Tag Combo List.
-- You cannot have a duplicate `TAGS` or `NAME` already in the address book. In this case, `TAGS` refers to the tags stored within the tag combo. 
+- You cannot have a duplicate `TAGS` or `NAME` already in the address book. In this case, `TAGS` refers to the tags stored within the tag combo.
 - For example, `addtagcombo HR t/marketing t/leadership` has `TAGS` marketing and leadership.
 
 Format: `addtagcombo NAME t/TAG t/TAG [t/TAG]...`
@@ -252,7 +233,7 @@ Format: `addtagcombo NAME t/TAG t/TAG [t/TAG]...`
 Examples:
 * `addtagcombo ml dev t/python t/ml`
 * `addtagcombo java backend dev t/java t/backend t/docker`
-  ![result for `addtagcombo java backend dev t/java t/backend t/docker`](images/addTagComboResult.png)
+* The updated list of Tag Combos will be shown in the Right Panel, and a confirmation will be shown in the Status Message Panel, e.g.`New Tag Combo added! java backend dev; Tags: [java][backend][docker]`
 
 ### Deleting tag combos: `deletetagcombo`
 
@@ -274,7 +255,7 @@ Lists all tag combos in the Right Panel.
 
 Format: `listtagcombo`
 
-  ![result for 'listtagcombo'](images/listTagComboResult.png)
+The updated list of tag combos will be shown in the Right Panel
 
 ### Deleting a candidate : `delete`
 
@@ -376,7 +357,7 @@ Examples:
 
 - `outlet add n/FinServ a/Marina Bay pc/018956`
 - `outlet add n/TechCo a/Raffles Place pc/048623`
-  ![result for `outlet add n/TechCo a/Raffles Place pc/048623`](images/OutletAddResult.png)
+- The status message panel will display a message confirming the outlet that was added, e.g. `New outlet added FinServ; Address Marina Bay; Postal Code: 018956`
 
 ### Editing Outlets : `outlet edit`
 
@@ -402,14 +383,14 @@ Format: `outlet assign CANDIDATE_INDEX [OUTLET_INDEX]`
 * Assumption: outlets are intended to be Singapore locations with valid Singapore postal codes.
 * If `OUTLET_INDEX` is provided, the candidate is assigned directly to that outlet.
 * If `OUTLET_INDEX` is omitted, nearest assignment mode is used:
-  * Candidate/outlet postal codes are looked up in the built-in SG postal dataset (`SG_postal.csv`).
-  * If candidate postal code is found:
-    * nearest outlet is selected using Euclidean distance on latitude/longitude,
-      considering only outlets whose postal code is also found in the dataset.
-    * if no outlet postal code is found in the dataset, one outlet is chosen randomly.
-  * If candidate postal code is not found:
-    * if at least one outlet postal code is also not found in the dataset, one of those outlets is chosen randomly.
-    * otherwise, one outlet is chosen randomly from all outlets.
+    * Candidate/outlet postal codes are looked up in the built-in SG postal dataset (`SG_postal.csv`).
+    * If candidate postal code is found:
+        * nearest outlet is selected using Euclidean distance on latitude/longitude,
+          considering only outlets whose postal code is also found in the dataset.
+        * if no outlet postal code is found in the dataset, one outlet is chosen randomly.
+    * If candidate postal code is not found:
+        * if at least one outlet postal code is also not found in the dataset, one of those outlets is chosen randomly.
+        * otherwise, one outlet is chosen randomly from all outlets.
 * Random fallback selection is non-deterministic.
 * If the SG postal dataset cannot be loaded, command execution fails.
 * If candidate address appears to be outside Singapore, assignment still succeeds and a warning is shown.
@@ -418,11 +399,11 @@ Format: `outlet assign CANDIDATE_INDEX [OUTLET_INDEX]`
 Examples:
 
 - `outlet assign 1 1`
-  ![result for `outlet assign 1 1`](images/OutletAssignResult.png)
+Status Message Panel displays `Assigned John Doe to outlet TechCo`, and the Right Panel for John Doe is updated with the newly assigned outlet, directly to the specified outlet.
 - `outlet assign 1`
-  ![result for `outlet assign 1`](images/OutletAssignResult.png)
-- `outlet assign 4` with non-Singapore-like address warning.
-  ![result for `outlet assign 4` with warning](images/OutletAssignResultWithWarning.png)
+Status Message Panel displays `Assigned John Doe to outlet TechCo`, and the Right Panel for John Doe is updated with the newly assigned outlet by nearest assignment mode.
+- `outlet assign 4` with non-Singapore-like address warning. Status Message Panel displays `Assigned John Doe to outlet TechCo`
+  `Warning: Candidate address appears to be outside Singapore`, and the Right Panel for John Doe is updated with the newly assigned outlet by nearest assignment mode (one of the random modes).
 
 ### Unassigning Candidates from Outlets : `outlet unassign`
 
@@ -465,69 +446,6 @@ HireLens data is saved in the hard disk automatically after any command that cha
 
 HireLens data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, HireLens will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+**Caution:**
+If your changes to the data file makes its format invalid, HireLens will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
 Furthermore, certain edits can cause HireLens to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
-</div>
-
---------------------------------------------------------------------------------------------------------------------
-
-## FAQ
-
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous HireLens home folder.
-
---------------------------------------------------------------------------------------------------------------------
-
-## Known issues
-
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
-
-3. Long command names<br>
-   Certain command names such as `addtagcombo` and `deletetagcombo` are relatively long and not well-suited for a typist-oriented UI. These longer names were intentionally chosen as default placeholders to support a future `rebind` feature, which would allow users to map frequently used commands to shorter aliases (e.g., `filter` → `f`). However, this feature has not yet been implemented. In practice, the impact of these longer command names is limited, as they mainly apply to low-frequency operations such as tag combo and outlet-related commands.
-
-4. Semantic ambiguity between `filter` and `find`<br>
-   `filter` and `find` commands provide very similar functionality, with `filter` taking in `Tag`s or `TagCombo`s, and `find` taking in names. However, `find` works using partial matching, while `filter` works using case-insensitive full matching. While this overlap in purpose may introduce some redundancy, the commands remain functionally distinct due to their differing input types and matching strategies. As such, the potential for user confusion is limited, and both commands continue to serve valid use cases. Given this distinction, consolidating or refactoring them is considered a low priority, as the current design does not significantly impact usability.
-
-5. Showing candidates full details require clicking<br>
-   As each candidate may contain many details, the application is designed to display full information only when required, achieved by clicking on a candidate in the list to reduce visual clutter. Additionally, full details are automatically shown for certain commands such as `add` and `edit`, ensuring that relevant information is surfaced when necessary.
-
-    However, this interaction model is not fully aligned with a typist-oriented UI, as it relies on mouse input for navigation. While this may introduce minor inefficiency for keyboard-focused users, the impact is limited since key workflows still surface the required details automatically. Enhancements to support keyboard-based navigation of candidate details are being considered for future iterations.
-
-6. Outlet input length limits are currently strict<br>
-   Outlet fields currently enforce tight limits (`name` max 10 characters, `address` max 18 characters). This keeps the current outlet list layout compact, but can be restrictive for realistic outlet names and addresses.
-
-   A future enhancement is planned to relax (or make configurable) these limits together with UI updates so longer values remain readable.
-
-
---------------------------------------------------------------------------------------------------------------------
-
-## Command summary
-
-Action | Format, Examples
---------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/123456 t/friend t/colleague`
-**Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [INDEX]… {[n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] [t/TAG]} [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**Filter** | `filter {[t/TAG] [tc/TAG_COMBO]} [t/TAG]... [tc/TAG_COMBO]... `<br> e.g., `filter t/java t/python tc/ml dev`
-**Compare Candidates** | `compare INDEX INDEX`<br> e.g. `compare 1 2`
-**List** | `list`
-**Help** | `help`
-**Exit** | `exit`
-**Undo** | `undo`
-**Redo** | `redo`
-**List Tags** | `listtags`
-**Add Tag Combo** | `addtagcombo NAME t/TAG t/TAG [t/TAG]...`<br> e.g., `addtagcombo ml dev t/python t/ml`
-**Delete Tag Combo** | `deletetagcombo INDEX`<br> e.g., `deletetagcombo 1`
-**List Tag Combos** | `listtagcombo`
-**Add by CSV** | `addcsv PATH_TO_CSV_FILE` <br> e.g., `addcsv data/candidates.csv`
-**Add Outlet** | `outlet add n/NAME a/ADDRESS pc/POSTAL_CODE` <br> e.g., `outlet add n/FinServ a/Marina Bay pc/018956`
-**Edit Outlet** | `outlet edit INDEX {[n/NAME] [a/ADDRESS] [pc/POSTAL_CODE]}` <br> e.g., `outlet edit 1 a/One Raffles Place pc/048616`
-**Assign Outlet** | `outlet assign CANDIDATE_INDEX [OUTLET_INDEX]` <br> e.g., `outlet assign 2 1` or `outlet assign 2`
-**Unassign Outlet** | `outlet unassign CANDIDATE_INDEX` <br> e.g., `outlet unassign 2`
-**Delete Outlet** | `outlet delete INDEX` <br> e.g., `outlet delete 1`
-**List Outlets** | `outlet list`
