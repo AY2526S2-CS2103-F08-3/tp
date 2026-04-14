@@ -15,7 +15,7 @@ HireLens is a **desktop app for HR recruiters to manage candidates, optimized fo
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103-F08-3/tp/releases/tag/v1.6).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103-F08-3/tp/releases/tag/v1.5).
 
 3. Copy the file to the folder you want to use as the _home folder_ for your HireLens.
 
@@ -28,7 +28,7 @@ HireLens is a **desktop app for HR recruiters to manage candidates, optimized fo
 
     * `list` : Lists all contacts.
 
-    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pc/123456` : Adds a contact named `John Doe` to the candidate list.
+    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pc/123456` : Adds a contact named `John Doe` to the Address Book.
 
     * `delete 3` : Deletes the 3rd candidate shown in the current candidate list.
 
@@ -55,7 +55,7 @@ The image above shows the key UI Components, which are described in detail below
 ### Additional Glossary Terms
 
 1. **Candidate**: Each person stored in the candidate list will be referred to as a candidate. A Candidate consists of the following details: **Name**, **Address**, **Email Address**, **Postal Code**, **Phone Number**, **Tags** (optional).
-2. **View**: A view refers to the graphical display of the candidate list. The current view refers to list of candidates that is currently visible in the graphical view. This distinction is important as some commands are performed on the current view of the candidate list, rather than the full candidate list.
+2. **View**: A view refers to the graphical display of the candidate book. The current view refers to list of candidates that is currently visible in the graphical view. This distinction is important as some commands are performed on the current view of the address book, rather than the full candidate book.
 3. **Tag Combination**: A set of tags defined by the user under a specific name (E.g The **MLE** tag combination could contain the tags **Python**, **SQL** and **Machine Learning**).
 4. **Outlet**: An outlet corresponds to a physical location of an office/asset of the company, with the following details: **Name**, **Address** and **Postal Code**.
 
@@ -97,8 +97,7 @@ Example: Entering `help` in the Command Box opens a new Help Window with the fea
 ### Adding a candidate: `add`
 
 Adds a candidate to the candidate list.
-- You cannot have a duplicate `PHONE_NUMBER` or `EMAIL` already in the candidate list.
-- The maximum capacity of the candidate list is 999.
+- You cannot have a duplicate `PHONE_NUMBER` or `EMAIL` already in the address book.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE [t/TAG]…​`
 
@@ -117,7 +116,7 @@ Examples:
 Adds multiple candidates from a CSV file.
 
 Format: `addcsv PATH_TO_CSV_FILE`
-- You cannot have a duplicate `PHONE_NUMBER` or `EMAIL` already in the candidate list or within the csv file.
+- You cannot have a duplicate `PHONE_NUMBER` or `EMAIL` already in the address book or within the csv file.
 
 * `PATH_TO_CSV_FILE` must point to a `.csv` file that exists.
 * The file path is resolved from the current working directory (typically the folder where you run the app/JAR).
@@ -159,7 +158,7 @@ Tag counts are displayed on the **Right Panel** on success, similar to calling `
 ### Editing a candidate : `edit`
 
 Edits at least one existing candidate in the candidate list.
-- You cannot have a duplicate `PHONE_NUMBER` or `EMAIL` already in the candidate list or within the candidates being edited.
+- You cannot have a duplicate `PHONE_NUMBER` or `EMAIL` already in the address book or within the candidates being edited.
 
 Format: `edit INDEX [INDEX]… {[n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] [t/TAG]} [t/TAG]…​`
 
@@ -241,7 +240,7 @@ Format: `listtags`
 ### Adding tag combos: `addtagcombo`
 
 Adds a tag combo to the Tag Combo List.
-- You cannot have a duplicate `TAGS` or `NAME` already in the candidate list. In this case, `TAGS` refers to the tags stored within the tag combo. 
+- You cannot have a duplicate `TAGS` or `NAME` already in the address book. In this case, `TAGS` refers to the tags stored within the tag combo. 
 - For example, `addtagcombo HR t/marketing t/leadership` has `TAGS` marketing and leadership.
 
 Format: `addtagcombo NAME t/TAG t/TAG [t/TAG]...`
@@ -279,7 +278,7 @@ Format: `listtagcombo`
 
 ### Deleting a candidate : `delete`
 
-Deletes the specified candidate from the candidate list.
+Deletes the specified candidate from the address book.
 
 Format: `delete INDEX`
 
@@ -289,7 +288,7 @@ Format: `delete INDEX`
 * The full details of the deleted candidate are displayed on the **Right Panel** on success.
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd candidate in the candidate list.
+* `list` followed by `delete 2` deletes the 2nd candidate in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st candidate in the results of the `find` command.
 
 ### Clearing all entries : `clear`
@@ -317,7 +316,7 @@ Format: `undo`
 * `outlet edit` Returns the edited `Outlet` to the original state.
 * `outlet assign` Unassigns the `Candidate` from the given `Outlet`.
 * `outlet unassign` Reassigns the `Candidate` to the previous `Outlet`.
-* `list`, `filter`, `find` Returns to the previous view of the application.
+* `list`, `filter`, `find` Returns to the previous view of the Address Book.
 * `clear` Adds all `Candidate`s deleted.
 
 ### Redoing previous action : `redo`
@@ -344,11 +343,11 @@ Format: `redo`
 * `outlet edit` Returns the original `Outlet` to the edited state.
 * `outlet assign` Reassigns the `Candidate` to the given `Outlet`.
 * `outlet unassign` Unassigns the `Candidate` from the previous `Outlet`.
-* `list`, `filter`, `find` Returns to the filtered view of the application.
+* `list`, `filter`, `find` Returns to the filtered view of the Address Book.
 * `clear` Deletes all `Candidate`s added.
 
 * `delete 2` followed by `undo` restores the person deleted at index 2.
-* `list` followed by `find Alice` followed by `undo` restores the view to a list of all persons in the candidate list.
+* `list` followed by `find Alice` followed by `undo` restores the view to a list of all persons in the address book.
 
 ### Exiting the program : `exit`
 
@@ -359,7 +358,7 @@ Format: `exit`
 ### Adding Outlets : `outlet add`
 
 Adds an `Outlet`.
-- You cannot have a duplicate `ADDRESS` and `POSTAL_CODE` both already in the outlet list.
+- You cannot have a duplicate `ADDRESS` and `POSTAL_CODE` both already in the address book.
 
 Format: `outlet add n/NAME a/ADDRESS pc/POSTAL_CODE`
 
@@ -382,7 +381,7 @@ Examples:
 ### Editing Outlets : `outlet edit`
 
 Edits an existing `Outlet`.
-- You cannot have a duplicate `ADDRESS` and `POSTAL_CODE` both already in the outlet list.
+- You cannot have a duplicate `ADDRESS` and `POSTAL_CODE` both already in the address book.
 
 - Format: `outlet edit <index> {[n/NAME] [a/ADDRESS] [pc/POSTAL_CODE]}`
 
@@ -446,7 +445,7 @@ Format: `outlet delete INDEX`
 
 * `INDEX` refers to the displayed outlet list.
 * If candidates are assigned to the deleted outlet, they are automatically unassigned.
-* Auto-unassignment applies across all candidates in the candidate list (not only filtered/displayed candidates).
+* Auto-unassignment applies across all candidates in the address book (not only filtered/displayed candidates).
 
 Examples:
 
