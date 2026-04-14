@@ -496,6 +496,11 @@ Furthermore, certain edits can cause HireLens to behave in unexpected ways (e.g.
 
     However, this interaction model is not fully aligned with a typist-oriented UI, as it relies on mouse input for navigation. While this may introduce minor inefficiency for keyboard-focused users, the impact is limited since key workflows still surface the required details automatically. Enhancements to support keyboard-based navigation of candidate details are being considered for future iterations.
 
+6. Outlet input length limits are currently strict<br>
+   Outlet fields currently enforce tight limits (`name` max 10 characters, `address` max 18 characters). This keeps the current outlet list layout compact, but can be restrictive for realistic outlet names and addresses.
+
+   A future enhancement is planned to relax (or make configurable) these limits together with UI updates so longer values remain readable.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
